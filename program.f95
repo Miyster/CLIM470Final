@@ -26,6 +26,29 @@ program finalproject
 
 
 !Brian and Lauren : topography variable, time discretization by Monday (11/07)
+
+    if (d == 5e+05) then       !topography variable for first resolution
+        hs(Nx/2) = hs_t
+    end if
+
+    if (d == 2.5e+05) then.    !topography variables for second resolution
+        hs(Nx/2-1) = 1e+03
+        hs(Nx/2) = hs_t
+        hs(Nx/2+1) = 1e+03
+    end if
+
+    if (d == 1.25e+05) then.   !topography variable for third resolution
+        hs(Nx/2-2) = 0.5e+03
+        hs(Nx/2-1) = 1.5e+03
+        hs(Nx/2) = hs_t
+        hs(Nx/2+1) = 0.5e+03
+        hs(Nx/2+2) = 0.5e+03
+    end if
+
+
+
+
+
 !Michael and Taylor: begin momentum equations after Brain and Lauren finish
 
 
