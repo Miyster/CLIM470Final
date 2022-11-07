@@ -2,4 +2,5 @@
 # taylor idea/research dump:
   # https://scitools.org.uk/iris/docs/v2.2/examples/Meteorology/wind_speed.html
   # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.quiver.html
+  # https://researchworkspace.com/file/2588789/plot-wind-vectors-from-grid.ipynb?preview=true
   # find way to create wind barbs
