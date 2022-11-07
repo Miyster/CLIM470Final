@@ -6,7 +6,7 @@ program finalproject
 !need to define Nx,Ny for each vector! 
 !real,allocatable::u(:,:), v(:,:), h(:,:)!
 !Nx,Ny!
-!allocate (u(Nx,Ny),v(Nx,Ny),h(Nx,Ny)!
+!allocate(u(Nx,Ny),v(Nx,Ny),h(Nx,Ny)!
 
     Lx = 6e+06 !domain size in x direction, real numbers
     Ly = 2e+06 !domain size in y direction, real numbers
