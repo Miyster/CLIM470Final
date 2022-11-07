@@ -52,12 +52,15 @@ program finalproject
 
 hu0(Nx,Ny,3)
 hv0(Nx,Ny,3)
+hq0(Nx,Ny,3)
 us0(Nx,Ny,3)
 vs0(Nx,Ny,3)
+h0 = 5000                     !top of fluid
 
 h(Nx,Ny)
 u(Nx,Ny)
 v(Nx,Ny)
+z(Nx,Ny)                      !add remaining new variables and initial conditions for q etc
 
 !initial conditions, t=0 or n=1
 
@@ -68,7 +71,7 @@ V(1:Nx,2:Ny-1) = 0.1          !horizontal velocity
 
 
 do i = 1, Nx
-    h(i,:) = hs(i)
+    h(i,:) = h0-hs(i)   !we only have the height of the topography so we account for fluid above
 end do 
 
 hu0(1,:,1) = (h(Nx,:) + h(2,:))/2.0
@@ -169,7 +172,7 @@ do n = 4, ntime
 end do !time loop 
 
 
-!Michael and Taylor: begin momentum equations after Brain and Lauren finish
+!Michael and Taylor: begin momentum equations after Brian and Lauren finish
 
 
 
