@@ -14,6 +14,7 @@ program finalproject
     Ny = Ly/d + 1 !number of grid points in the y direction (5, 9, 17), integers
 
     hs_t = 2e+03 !height of the topography
+    ! need to initialize h0, cannot equal/exceed top of the model or 5000! 
 
     delt = 10*60 !time step (10 min) in seconds (changes for each run)
     !delt = 5*60
