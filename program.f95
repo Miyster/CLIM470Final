@@ -1,31 +1,32 @@
 
 program finalproject
 
-!Make actual variable and parameters!
-
+!Make actual variable and parameters
 !need to define Nx,Ny for each vector! 
-!real,allocatable::u(:,:), v(:,:), h(:,:)!
+int :: d, Lx, Ly, Nx, Ny            
+real :: hs_t, delt, an, an_1, an_2, an_3
+real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:)
 !Nx,Ny!
 !allocate(u(Nx,Ny),v(Nx,Ny),h(Nx,Ny)!
 
-    Lx = 6e+06 !domain size in x direction, real numbers
-    Ly = 2e+06 !domain size in y direction, real numbers
+    Lx = 6e+06                                  !domain size in x direction, real numbers
+    Ly = 2e+06                                  !domain size in y direction, real numbers
 
-    d = 5e+05       !Resolution (changes for each run)
+    d = 5e+05                                   !Resolution (changes for each run)
     !d = 2.5e+05
     !d = 1.25e+05
 
-    Nx = Lx/d + 1 !number of grid points in the x direction (13, 25, 49), integers
-    Ny = Ly/d + 1 !number of grid points in the y direction (5, 9, 17), integers
+    Nx = Lx/d + 1                               !number of grid points in the x direction (13, 25, 49), integers
+    Ny = Ly/d + 1                               !number of grid points in the y direction (5, 9, 17), integers
 
-    hs_t = 2e+03 !height of the topography
+    hs_t = 2e+03                                !height of the topography
     ! need to initialize h0, cannot equal/exceed top of the model or 5000! 
 
-    delt = 10*60 !time step (10 min) in seconds (changes for each run)
+    delt = 10*60                                !time step (10 min) in seconds (changes for each run)
     !delt = 5*60
     !delt = 2.5*60
 
-    an = (55*delt)/24   !alphas for 3rd order adams-bashforth schemes, double check these 
+    an = (55*delt)/24                           !alphas for 3rd order adams-bashforth schemes, double check these 
     an_1 = (59*delt)/24
     an_2 = (37*delt)/24
     an_3 = (9*delt)/24
@@ -33,17 +34,17 @@ program finalproject
 
 !Brian and Lauren : topography variable, time discretization by Monday (11/07)
 
-    if (d == 5e+05) then       !topography variable for first resolution
+    if (d == 5e+05) then                        !topography variable for first resolution
         hs(Nx/2) = hs_t
     end if
 
-    if (d == 2.5e+05) then.    !topography variables for second resolution
+    if (d == 2.5e+05) then.                     !topography variables for second resolution
         hs(Nx/2-1) = 1e+03
         hs(Nx/2) = hs_t
         hs(Nx/2+1) = 1e+03
     end if
 
-    if (d == 1.25e+05) then.   !topography variable for third resolution
+    if (d == 1.25e+05) then.                    !topography variable for third resolution
         hs(Nx/2-2) = 0.5e+03
         hs(Nx/2-1) = 1.5e+03
         hs(Nx/2) = hs_t
@@ -51,7 +52,7 @@ program finalproject
         hs(Nx/2+2) = 0.5e+03
     end if
 
-!Time discretization using 3rd order adams-bashforth scheme 
+                                                !Time discretization using 3rd order adams-bashforth scheme 
 
 !variables 
 
@@ -60,19 +61,20 @@ hv0(Nx,Ny,3)
 hq0(Nx,Ny,3)
 us0(Nx,Ny,3)
 vs0(Nx,Ny,3)
-h0 = 5000                     !top of fluid
+h0 = 5000                                       !top of fluid
 
 h(Nx,Ny)
 u(Nx,Ny)
 v(Nx,Ny)
-z(Nx,Ny)                      !add remaining new variables and initial conditions for q etc
+z(Nx,Ny)
+!add remaining new variables and initial conditions for q etc
 
 !initial conditions, t=0 or n=1
 
-u(1:Nx,1:Ny) = 0.5            !value of u
-v(1:Nx,1) = 0                 !value of v
-v(1:Nx,Ny) = 0                !value of v
-V(1:Nx,2:Ny-1) = 0.1          !horizontal velocity 
+u(1:Nx,1:Ny) = 0.5                          !value of u
+v(1:Nx,1) = 0                               !value of v
+v(1:Nx,Ny) = 0                              !value of v
+V(1:Nx,2:Ny-1) = 0.1                        !horizontal velocity 
 
 
 do i = 1, Nx
