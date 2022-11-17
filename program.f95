@@ -5,7 +5,7 @@ program finalproject
 !need to define Nx,Ny for each vector! 
 int :: d, Lx, Ly, Nx, Ny            
 real :: hs_t, delt, an, an_1, an_2, an_3
-real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), ght(:,:), ken(:,:), alp0(:,:,3), bet0(:,:,3), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), ght0(:,:,:), q0(:,:,:) z0(:,:,:)
+real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), ght(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), ght0(:,:,:), q0(:,:,:) z0(:,:,:)
 !Nx,Ny!
 !allocate(u(Nx,Ny),v(Nx,Ny),h(Nx,Ny)!
 
