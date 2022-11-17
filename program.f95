@@ -2,12 +2,12 @@
 program finalproject
 
 !Make actual variable and parameters
-!need to define Nx,Ny for each vector! 
-int :: d, Lx, Ly, Nx, Ny            
+! need to define Nx,Ny for each vector
+int :: d, Lx, Ly, Nx, Ny, h0, nstep         
 real :: hs_t, delt, an, an_1, an_2, an_3
-real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), ght(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), ght0(:,:,:), q0(:,:,:) z0(:,:,:)
-!Nx,Ny!
-!allocate(u(Nx,Ny),v(Nx,Ny),h(Nx,Ny)!
+real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), phi(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), phi0(:,:,:), q0(:,:,:), z0(:,:,:)
+real, parameter:: f_cor=10e-04, g=9.8
+
 
 !Initialize domain and resolution
     Lx = 6e+06                                  !domain size in x direction, real numbers
@@ -19,18 +19,20 @@ real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), ght(:,:), ken(:,:), 
 
     Nx = Lx/d + 1                               !number of grid points in the x direction (13, 25, 49), integers
     Ny = Ly/d + 1                               !number of grid points in the y direction (5, 9, 17), integers
-
+    
+    
     hs_t = 2e+03                                !height of the topography
     ! need to initialize h0, cannot equal/exceed top of the model or 5000! 
+   
 
     delt = 10*60                                !time step (10 min) in seconds (changes for each run)
     !delt = 5*60
     !delt = 2.5*60
 
-    an = (55*delt)/24                           !alphas for 3rd order adams-bashforth schemes, double check these 
-    an_1 = (59*delt)/24
-    an_2 = (37*delt)/24
-    an_3 = (9*delt)/24
+    f = (55*delt)/24                           !alphas for 3rd order adams-bashforth schemes, double check these 
+    f_1 = (59*delt)/24
+    f_2 = (37*delt)/24
+    f_3 = (9*delt)/24
 
 
 !Establish topography
@@ -62,19 +64,25 @@ hv0(Nx,Ny,3)
 hq0(Nx,Ny,3)
 us0(Nx,Ny,3)
 vs0(Nx,Ny,3)
+
 alp0(Nx, Ny, 3)
 bet0(Nx,Ny,3)
 gam0(Nx,Ny,3)
 del0(Nx,Ny,3)
 eps0(Nx,Ny,3)
 ken0(Nx,Ny,3)
-ght0(Nx,Ny,3)
+phi0(Nx,Ny,3)
+ 
+
+
 q0(Nx,Ny,3)
 z0(Nx,Ny,3)
 z(Nx,Ny)
-q(Nx,Ny)
-ght(Nx, Ny)
-ken(Nx, Ny)
+q(Nx,Ny)    
+
+                                      
+ght(Nx, Ny)                                     ! geopotential 
+ken(Nx, Ny)                                     ! kinetic energy 
 h0 = 5000                                       !top of fluid
 
 h(Nx,Ny)
@@ -92,7 +100,7 @@ V(1:Nx,2:Ny-1) = 0.1                        !horizontal velocity
 
 
 do i = 1, Nx
-    h(i,:) = h0-hs(i)   !we only have the height of the topography so we account for fluid above
+    h(i,:) = h0-hs_t(i)   !we only have the height of the topography so we account for fluid above
 end do 
 
 hu0(1,:,1) = (h(Nx,:) + h(2,:))/2.0
@@ -206,13 +214,17 @@ hv1 = hv0(:,:,1)
 hv2 = hv0(:,:,2)
 hv3 = hv0(:,:,3)
 
+! define momentum coefficients from eq. 3.13 
+
+
+
 nstep = 4
 
 do n = 4, ntime
     nstep = nstep + 1
     do i = 2, Nx-1
         do j = 2, Ny-1
-            h(i,j) = h(i,j)-an*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+an_1*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-an_2*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
+            h(i,j) = h(i,j)-f*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+f_1*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-f_2*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
         end do
     end do
 
