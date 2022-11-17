@@ -5,10 +5,11 @@ program finalproject
 !need to define Nx,Ny for each vector! 
 int :: d, Lx, Ly, Nx, Ny            
 real :: hs_t, delt, an, an_1, an_2, an_3
-real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:)
+real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), ght(:,:), ken(:,:), alp0(:,:,3), bet0(:,:,3), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), ght0(:,:,:), q0(:,:,:) z0(:,:,:)
 !Nx,Ny!
 !allocate(u(Nx,Ny),v(Nx,Ny),h(Nx,Ny)!
 
+!Initialize domain and resolution
     Lx = 6e+06                                  !domain size in x direction, real numbers
     Ly = 2e+06                                  !domain size in y direction, real numbers
 
@@ -32,7 +33,7 @@ real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:)
     an_3 = (9*delt)/24
 
 
-!Brian and Lauren : topography variable, time discretization by Monday (11/07)
+!Establish topography
 
     if (d == 5e+05) then                        !topography variable for first resolution
         hs(Nx/2) = hs_t
@@ -54,13 +55,26 @@ real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:)
 
                                                 !Time discretization using 3rd order adams-bashforth scheme 
 
-!variables 
+!initialize variables 
 
 hu0(Nx,Ny,3)
 hv0(Nx,Ny,3)
 hq0(Nx,Ny,3)
 us0(Nx,Ny,3)
 vs0(Nx,Ny,3)
+alp0(Nx, Ny, 3)
+bet0(Nx,Ny,3)
+gam0(Nx,Ny,3)
+del0(Nx,Ny,3)
+eps0(Nx,Ny,3)
+ken0(Nx,Ny,3)
+ght0(Nx,Ny,3)
+q0(Nx,Ny,3)
+z0(Nx,Ny,3)
+z(Nx,Ny)
+q(Nx,Ny)
+ght(Nx, Ny)
+ken(Nx, Ny)
 h0 = 5000                                       !top of fluid
 
 h(Nx,Ny)
@@ -123,6 +137,60 @@ end do
 us0(:,:,n) = hu0(:,:,n)*u(:,:)
 vs0(:,:,n) = hv0(:,:,n)*v(:,:)
 
+end do
+!begin momentum :mike:
+
+do i = 1, Nx
+       z0(i,1)=0.
+    z0(i,Ny)=0.
+end do
+do j=2,Ny-1
+    z0(1,j,1)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d
+    z0(Nx,j,1)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d
+end do
+do i=2,Nx-1
+    z0(i,1,1)=(-u(i,2)+v(i+1,1)-v(i-1,1))/d
+    z0(i,Ny,1)=(u(i,Ny-1)+v(i+1,Ny)-v(i-1,Ny))/d
+end do
+do i=2,Nx-1
+do j=2,Ny-1
+    z0(i,j,1)=(u(i,j-1)-u(i,j+1)+v(i+1,j)-v(i-1,j))/d
+end do
+end do
+    hq0(1,:,1)=(h(1,1) + h(Nx,1))/2.0
+    hq0(1,Ny,1)=(h(1,Ny-1) + h(Nx,Ny-2))/2.0
+do i = 2,Nx
+    hq0(i,1,1)=(h(i,1) + h(i-1,1))/2.0
+    hq0(i,Ny,1)=(h(i,Ny-1) + h(i-1,Ny-1))/2.0
+end do
+do j = 2,Ny-1
+    hq0(1,j,1)=(h(1,j) + h(i-1,j) + h(Nx,j) + h(Nx-1,j-1))/4.0
+end do
+do j = 2,Ny-1
+do i = 2,Nx
+    hq0(i,j,0)=(h(i,j) + h(i-1,j) + h(i-1,j-1) + h(i,j-1))/4.0
+end do
+end do
+do j = 1,Ny
+do i = 1,Nx
+    q0(i,j,1)=(z0(i,j,0) + f_cor)/hq0(i,j,0)
+end do
+end do
+do i = 1,Nx
+do j = 1, Ny
+    ght0(i,j,1) = g*(hs(i) + h(i,j))
+end do
+end do
+do = 1, Nx
+    ken0(i,Ny,1)=0.
+end do
+do j = 1,Ny-1
+    ken0(Nx,j,1)=(u(Nx-1,j)**2 + u(1,j)**2 + v(Nx-1,j)**2 + v(1,Ny+1**2))/4.
+end do
+do i = 1, Nx-1
+do j = 1, Ny-1
+    ken0(i,j,1) )=(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1**2))/4.
+end do
 end do
 
 us1 = us0(:,:,1)
