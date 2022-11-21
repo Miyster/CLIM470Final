@@ -31,10 +31,9 @@ real, parameter:: f_cor=10e-04, g=9.8
     !delt = 5*60
     !delt = 2.5*60
 
-    f = (55*delt)/24                           !alphas for 3rd order adams-bashforth schemes, double check these 
-    f_1 = (59*delt)/24
-    f_2 = (37*delt)/24
-    f_3 = (9*delt)/24
+    f_1= (23*delt)/12                           !alphas for 3rd order adams-bashforth schemes, double check these 
+    f_2 = (4*delt)/3
+    f_3 = (5*delt)/12
 
 
 !Establish topography
@@ -226,7 +225,7 @@ do n = 4, ntime
     nstep = nstep + 1
     do i = 2, Nx-1
         do j = 2, Ny-1
-            h(i,j) = h(i,j)-f*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+f_1*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-f_2*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
+            h(i,j) = h(i,j)-f_1*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
         end do
     end do
 
