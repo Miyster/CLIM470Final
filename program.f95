@@ -3,6 +3,7 @@ program finalproject
 
 !Make actual variable and parameters
 ! need to define Nx,Ny for each vector
+! define ntime, how many dT 
 
 Implicit none 
 int :: d, Lx, Ly, Nx, Ny, h0, nstep         
