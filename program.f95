@@ -5,6 +5,7 @@ program finalproject
 ! need to define Nx,Ny for each vector
 ! define ntime, how many dT 
 ! compile code, look for syntax errors, run code (as of 11/21)
+! one subroutine involved in this project 
 
 Implicit none 
 int :: d, Lx, Ly, Nx, Ny, h0, nstep         
