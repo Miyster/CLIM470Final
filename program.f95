@@ -3,6 +3,8 @@ program finalproject
 
 !Make actual variable and parameters
 ! need to define Nx,Ny for each vector
+
+Implicit none 
 int :: d, Lx, Ly, Nx, Ny, h0, nstep         
 real :: hs_t, delt, an, an_1, an_2, an_3
 real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), phi(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), phi0(:,:,:), q0(:,:,:), z0(:,:,:)
