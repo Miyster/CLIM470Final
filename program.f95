@@ -6,6 +6,7 @@ program finalproject
 ! define ntime, how many dT 
 ! compile code, look for syntax errors, run code (as of 11/21)
 ! one subroutine involved in this project 
+! use print statements to help with debugging the code 
 
 Implicit none 
 int :: d, Lx, Ly, Nx, Ny, h0, nstep         
