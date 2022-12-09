@@ -249,7 +249,7 @@ do i = 1,Nx
 end do
 ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
 
-
+! need to add in u(i,j) and v(i,j) for momentum
 nstep = 4
 
 do n = 4, ntime
@@ -257,8 +257,11 @@ do n = 4, ntime
     do i = 2, Nx-1
         do j = 2, Ny-1
             h(i,j) = h(i,j)-f_1*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+
-            f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-
-            f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
+                     f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-
+                     f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
+            
+            u(i,j) = u(i,j) + f1*
+            v(i,j) = v(i,j) – f1*
         end do
     end do
 
