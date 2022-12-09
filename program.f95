@@ -11,7 +11,9 @@ program finalproject
 Implicit none 
 int :: d, Lx, Ly, Nx, Ny, h0, nstep         
 real :: hs_t, delt, an, an_1, an_2, an_3
-real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), phi(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), ken0(:,:,:), phi0(:,:,:), q0(:,:,:), z0(:,:,:)
+real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), 
+                    phi(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), 
+                    ken0(:,:,:), phi0(:,:,:), q0(:,:,:), z0(:,:,:)
 real, parameter:: f_cor=10e-04, g=9.8
 
 
@@ -83,7 +85,7 @@ phi0(Nx,Ny,3)
 q0(Nx,Ny,3)
 z0(Nx,Ny,3)
 z(Nx,Ny)
-q(Nx,Ny)    
+q(Nx,Ny)                                        ! absolute potential vorticity 
 
                                       
 ght(Nx, Ny)                                     ! geopotential 
@@ -92,7 +94,7 @@ h0 = 5000                                       !top of fluid
 
 h(Nx,Ny)
 u(Nx,Ny)
-v(Nx,Ny)
+v(Nx,Ny)                                        ! vertical velocity 
 z(Nx,Ny)
 !add remaining new variables and initial conditions for q etc
 
@@ -221,6 +223,31 @@ hv3 = hv0(:,:,3)
 
 ! define momentum coefficients from eq. 3.13 
 
+do n = 2,3
+    do i = 2, Nx-1 
+        do j = 2, Ny-1
+            h(i,j) = h(i,j)-delt*(us0(i+1,j+1,n-1) – us0(i,j+1,n-1) + vs0(i+1,j+1,n-1) – vs0(i+1,j,n-1))/d
+            u(i,j) = u(i,j)+delt*(alp0(i,j+1,n-1)*vs0(I,j,n-1)+bet0(i,j+1,n-1)*vs0(i-1,j+1,n-1)+ gam0(i,j+1,n-1)*vs0(i-1,j,n-1)+del0(i,j+1,n-1)*vs0(i+1,j,n-1)–
+            eps0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+eps0(i-1,j+1,n-1)*us0(i-1,j+1,n-1)-
+            (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i-1,j+1,n-1)-ght0(i-1,j+1,n-1))/d) 
+
+            v(i,j) = v(i,j)-delt*(gam0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+del0(i,j+1,n-1)*us0(i,j+1,n-1)+
+            alp0(I,j-1)*us0(I,j-1,n-1)+bet0(i+1,j-1,n-1)*us0(i+1,j-1,n-1)+ phi0(i+1,j+1,n-1)*vs0(i+1,j+1,n-1)-phi0(i+1,j-1,n-1)*vs0(i+1,j-1,n-1)- (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i+1,j-1,n-1)-phi(i+1,j-1,n-1)/d)
+  
+            z0(1,j,n)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d 
+            z0(Nx,j,n)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d 
+            
+
+        end do 
+    end do
+end do
+
+hq0(:,:,n) = ()
+q0(:,:,n) = (fcor+z0(:,:,n))/hq0(:,:,n) 
+do i = 1,Nx
+    ght0(i,:,n) = g*(h(i,:)+hs(i))
+end do
+ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
 
 
 nstep = 4
@@ -229,7 +256,9 @@ do n = 4, ntime
     nstep = nstep + 1
     do i = 2, Nx-1
         do j = 2, Ny-1
-            h(i,j) = h(i,j)-f_1*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
+            h(i,j) = h(i,j)-f_1*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+
+            f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-
+            f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
         end do
     end do
 
@@ -240,6 +269,8 @@ do n = 4, ntime
     do j = 2, Ny-1
         hv(:,j) = (h(:,j-1) + h(:,j+1))/2.0
     end do
+    
+
 
     us(:,:) = hu(:,:)*u(:,:)
     vs(:,:) = hv(:,:)*v(:,:)
@@ -265,6 +296,8 @@ end do !time loop
 
 
 !Michael and Taylor: begin momentum equations after Brian and Lauren finish
+
+
 
 
 
