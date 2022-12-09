@@ -39,7 +39,8 @@ REAL, parameter:: f_cor=10e-04, g=9.8
 
     f_1= (23*delt)/12                           !alphas for 3rd order adams-bashforth schemes, double check these 
     f_2 = (4*delt)/3
-    f_3 = (5*delt)/12
+    f_3 = (5*delt)/12	!are these supposed to be an_1? did we change the name? if so update or declare
+    
 
 
 !Establish topography
