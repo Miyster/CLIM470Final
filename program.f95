@@ -1,5 +1,5 @@
 
-program finalproject
+PROGRAM finalproject
 
 !Make actual variable and parameters
 ! need to define Nx,Ny for each vector
@@ -8,14 +8,14 @@ program finalproject
 ! one subroutine involved in this project 
 ! use print statements to help with debugging the code 
 
-Implicit none 
-int :: d, Lx, Ly, Nx, Ny, h0, nstep         
-real :: hs_t, delt, an, an_1, an_2, an_3
-real, allocatable:: u(:,:), v(:,:), h(:,:), z(:,:), q(:,:), 
-                    phi(:,:), ken(:,:), alp0(:,:,:), bet0(:,:,:), gam0(:,:,:), del(:,:,:), eps0(:,:,:), 
-                    ken0(:,:,:), phi0(:,:,:), q0(:,:,:), z0(:,:,:)
-real, parameter:: f_cor=10e-04, g=9.8
+IMPLICIT NONE 
 
+INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep        
+REAL :: hs_t, delt, an, an_1, an_2, an_3
+REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
+REAL, allocatable:: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
+REAL, parameter:: f_cor=10e-04, g=9.8
+!something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
 !Initialize domain and resolution
     Lx = 6e+06                                  !domain size in x direction, real numbers
@@ -44,59 +44,57 @@ real, parameter:: f_cor=10e-04, g=9.8
 
 !Establish topography
 
-    if (d == 5e+05) then                        !topography variable for first resolution
-        hs(Nx/2) = hs_t
-    end if
+SELECT CASE (d)
+	CASE (5e+05)                       !topography variable for first resolution
+        	hs(Nx/2) = hs_t
+	CASE (2.5e+05)                    !topography variables for second resolution
+        	hs(Nx/2-1) = 1e+03
+        	hs(Nx/2) = hs_t
+        	hs(Nx/2+1) = 1e+03
 
-    if (d == 2.5e+05) then.                     !topography variables for second resolution
-        hs(Nx/2-1) = 1e+03
-        hs(Nx/2) = hs_t
-        hs(Nx/2+1) = 1e+03
-    end if
-
-    if (d == 1.25e+05) then.                    !topography variable for third resolution
-        hs(Nx/2-2) = 0.5e+03
-        hs(Nx/2-1) = 1.5e+03
-        hs(Nx/2) = hs_t
-        hs(Nx/2+1) = 0.5e+03
-        hs(Nx/2+2) = 0.5e+03
-    end if
+	CASE (1.25e+05)                    !topography variable for third resolution
+        	hs(Nx/2-2) = 0.5e+03
+        	hs(Nx/2-1) = 1.5e+03
+        	hs(Nx/2) = hs_t
+        	hs(Nx/2+1) = 0.5e+03
+        	hs(Nx/2+2) = 0.5e+03
+ END SELECT
 
                                                 !Time discretization using 3rd order adams-bashforth scheme 
 
 !initialize variables 
 
-hu0(Nx,Ny,3)
-hv0(Nx,Ny,3)
-hq0(Nx,Ny,3)
-us0(Nx,Ny,3)
-vs0(Nx,Ny,3)
+!*****We need to allocate these with the "allocate" command, but it kept throwing errors saying it was not an allocatable variable when I tried
+!***also, they are separated out into separate allocate commands just for debugging, once the variables are straightend out we can make
+!it into one comma separated command
 
-alp0(Nx, Ny, 3)
-bet0(Nx,Ny,3)
-gam0(Nx,Ny,3)
-del0(Nx,Ny,3)
-eps0(Nx,Ny,3)
-ken0(Nx,Ny,3)
-phi0(Nx,Ny,3)
+allocate (hu0(Nx,Ny,3)) 
+allocate (hv0(Nx,Ny,3))
+allocate (hq0(Nx,Ny,3))
+allocate (us0(Nx,Ny,3))
+allocate (vs0(Nx,Ny,3)) 
+allocate (alp0(Nx,Ny,3)) 
+allocate (bet0(Nx,Ny,3))
+allocate (gam0(Nx,Ny,3))
+allocate (del0(Nx,Ny,3)) 
+allocate (eps0(Nx,Ny,3)) 
+allocate (ken0(Nx,Ny,3))
+allocate (phi0(Nx,Ny,3))
  
+allocate (q0(Nx,Ny,3))
+allocate (z0(Nx,Ny,3))
+allocate (z(Nx,Ny))
+allocate (q(Nx,Ny) )                                       ! absolute potential vorticity                                       
+allocate (ght(Nx, Ny))                                     ! geopotential 
+allocate (ken(Nx, Ny))                                     ! kinetic energy 
 
 
-q0(Nx,Ny,3)
-z0(Nx,Ny,3)
-z(Nx,Ny)
-q(Nx,Ny)                                        ! absolute potential vorticity 
-
-                                      
-ght(Nx, Ny)                                     ! geopotential 
-ken(Nx, Ny)                                     ! kinetic energy 
+allocate (h(Nx,Ny))
+allocate (u(Nx,Ny))
+allocate (v(Nx,Ny))                                        ! vertical velocity 
+allocate (z(Nx,Ny))
 h0 = 5000                                       !top of fluid
-
-h(Nx,Ny)
-u(Nx,Ny)
-v(Nx,Ny)                                        ! vertical velocity 
-z(Nx,Ny)
-!add remaining new variables and initial conditions for q etc
+!add remaining new variables and initial conditions for q etc (Done?)
 
 !initial conditions, t=0 or n=1
 
