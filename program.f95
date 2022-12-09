@@ -241,7 +241,7 @@ do n = 2,3
         end do 
     end do
 end do
-
+! what is hq0??????? add in parentheses
 hq0(:,:,n) = ()
 q0(:,:,n) = (fcor+z0(:,:,n))/hq0(:,:,n) 
 do i = 1,Nx
