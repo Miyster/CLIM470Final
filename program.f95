@@ -14,8 +14,8 @@ INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep,i,j,n,ntime
 REAL :: hs_t, delt, f_1, f_2, f_3
 !REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
 !REAL, allocatable :: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
-REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,us1,us2,us3,vs0,ght0
-REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, hs, phi, ken, ght
+REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,ght0
+REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, hs, phi, ken, ght, us1,us2,us3
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
@@ -83,9 +83,9 @@ allocate(hv2(Nx,Ny,3))
 allocate(hv3(Nx,Ny,3))
 
 allocate(us0(Nx,Ny,3))
-allocate(us1(Nx,Ny,3))
-allocate(us2(Nx,Ny,3))
-allocate(us3(Nx,Ny,3))
+allocate(us1(Nx,Ny))
+allocate(us2(Nx,Ny))
+allocate(us3(Nx,Ny))
 
 allocate(vs0(Nx,Ny,3)) 
 !allocate(vs1(Nx,Ny,3)) 
