@@ -14,7 +14,7 @@ INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep
 REAL :: hs_t, delt, an, an_1, an_2, an_3
 !REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
 !REAL, allocatable :: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
-REAL, DIMENSION(:,:,:), allocatable :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hv0,hq0,us0,vs0
+REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hv0,hq0,us0,vs0, ght0
 REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, hs, phi, ken, ght
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
@@ -83,6 +83,7 @@ allocate(del0(Nx,Ny,3))
 allocate(eps0(Nx,Ny,3)) 
 allocate(ken0(Nx,Ny,3))
 allocate(phi0(Nx,Ny,3))
+allocate(ght0(Nx,Ny,3))
  
 allocate(q0(Nx,Ny,3))
 allocate(z0(Nx,Ny,3))
@@ -96,7 +97,7 @@ allocate (h(Nx,Ny)) !Error: Shape specification for allocatable scalar at (1)
 allocate (u(Nx,Ny))
 allocate (v(Nx,Ny))                                        ! vertical velocity 
 allocate (z(Nx,Ny))
-h0 = 5000                                       !top of fluid
+h0 = 4999		                                     !top of fluid
 !add remaining new variables and initial conditions for q etc (Done?)
 
 !initial conditions, t=0 or n=1
@@ -239,8 +240,9 @@ hv3 = hv0(:,:,3)
 do n = 2,3
     do i = 2, Nx-1 
         do j = 2, Ny-1
-            h(i,j) = h(i,j)-delt*(us0(i+1,j+1,n-1) – us0(i,j+1,n-1) + vs0(i+1,j+1,n-1) – vs0(i+1,j,n-1))/d
-            u(i,j) = u(i,j)+delt*(alp0(i,j+1,n-1)*vs0(I,j,n-1)+bet0(i,j+1,n-1)*vs0(i-1,j+1,n-1)+ gam0(i,j+1,n-1)*vs0(i-1,j,n-1)+del0(i,j+1,n-1)*vs0(i+1,j,n-1)–
+            h(i,j) = h(i,j)-delt*(us0(i+1,j+1,n-1)) – us0(i,j+1,n-1) + vs0(i+1,j+1,n-1) – vs0(i+1,j,n-1))/d
+	    
+            u(i,j) = u(i,j)+delt*(alp0(i,j+1,n-1)*vs0(i,j,n-1)+bet0(i,j+1,n-1)*vs0(i-1,j+1,n-1)+ gam0(i,j+1,n-1)*vs0(i-1,j,n-1)+del0(i,j+1,n-1)*vs0(i+1,j,n-1)–
             eps0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+eps0(i-1,j+1,n-1)*us0(i-1,j+1,n-1)-
             (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i-1,j+1,n-1)-ght0(i-1,j+1,n-1))/d) 
 
@@ -258,7 +260,7 @@ hq0(:,:,n) = ()
 q0(:,:,n) = (fcor+z0(:,:,n))/hq0(:,:,n) 
 
 do i = 1,Nx
-    ght0(i,:,n) = g*(h(i,:)+hs(i))
+   ght0(i,:,n) = g*(h(i,:)+hs(i))
 end do
 
 ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
@@ -274,8 +276,8 @@ do n = 4, ntime
                      f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-
                      f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
             
-            u(i,j) = u(i,j) + f1*
-            v(i,j) = v(i,j) – f1*
+            u(i,j) = u(i,j) + f_1*
+            v(i,j) = v(i,j) – f_1*
         end do
     end do
 
