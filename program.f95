@@ -288,7 +288,7 @@ end do
 
 ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
 
-! need to add in u(i,j) and v(i,j) for momentum
+! added in u(i,j) and v(i,j) for momentum
 nstep = 4
 
 do n = 4, ntime
@@ -299,8 +299,31 @@ do n = 4, ntime
                      +f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j)) &
                      -f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
             
-            u(i,j) = u(i,j) + f_1
-            v(i,j) = v(i,j) - f_1
+            u(i,j) = u(i,j) + f_1*(alp1(i,j+1)*vs1(i,j)+bet1(i,j+1)*vs1(i-1,j+1)
+	    	+gam1(i,j+1)*vs1(i-1,j)+del1(i,j+1)*vs1(i+1,j)
+		-eps1(i+1,j+1)*us1(i+1,j+1)+eps1(i-1,j+1)*us1(i-1,j+1)
+		-(ken1(i+1,j+1)+ght1(i+1,j+1)-ken1(i-1,j+1)-ght1(i-1,j+1))/d)
+		-f_2*(alp2(i,j+1)*vs2(i,j)+bet2(i,j+1)*vs2(i-1,j+1)
+	    	+gam2(i,j+1)*vs2(i-1,j)+del2(i,j+1)*vs2(i+1,j)
+		-eps2(i+1,j+1)*us2(i+1,j+1)+eps2(i-1,j+1)*us2(i-1,j+1)
+		-(ken2(i+1,j+1)+ght2(i+1,j+1)-ken2(i-1,j+1)-ght2(i-1,j+1))/d)
+		+f_3*(alp3(i,j+1)*vs3(i,j)+bet3(i,j+1)*vs3(i-1,j+1)
+	    	+gam3(i,j+1)*vs3(i-1,j)+del3(i,j+1)*vs3(i+1,j)
+		-eps3(i+1,j+1)*us3(i+1,j+1)+eps3(i-1,j+1)*us3(i-1,j+1)
+		-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i-1,j+1)-ght3(i-1,j+1))/d)
+            
+	    v(i,j) = v(i,j) - f_1*(gam1(i+1,j+1)*us1(i+1,j+1)+del1(i,j+1)*us1(i,j+1)
+	    		+alp1(i,j-1)*us1(i,j-1)+bet1(i+1,j-1)*us1(i+1,j-1)
+			+phi1(i+1,j+1)*vs1(i+1,j+1)-phi1(i+1,j-1)*vs1(i+1,j-1)
+			-(ken1(i+1,j+1)+ght1(i+1,j+1)-ken1(i+1,j-1)-ght1(i+1,j-1))/d)
+			+f_2*(gam2(i+1,j+1)*us2(i+1,j+1)+del2(i,j+1)*us2(i,j+1)
+	    		+alp2(i,j-1)*us2(i,j-1)+bet2(i+1,j-1)*us2(i+1,j-1)
+			+phi2(i+1,j+1)*vs2(i+1,j+1)-phi2(i+1,j-1)*vs2(i+1,j-1)
+			-(ken2(i+1,j+1)+ght2(i+1,j+1)-ken2(i+1,j-1)-ght2(i+1,j-1))/d)
+			-f_3*(gam3(i+1,j+1)*us3(i+1,j+1)+del3(i,j+1)*us3(i,j+1)
+	    		+alp3(i,j-1)*us3(i,j-1)+bet3(i+1,j-1)*us3(i+1,j-1)
+			+phi3(i+1,j+1)*vs3(i+1,j+1)-phi3(i+1,j-1)*vs3(i+1,j-1)
+			-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i+1,j-1)-ght3(i+1,j-1))/d)
         end do
     end do
 
