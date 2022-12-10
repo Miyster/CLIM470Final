@@ -11,11 +11,10 @@ PROGRAM finalproject
 IMPLICIT NONE 
 
 INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep,i,j,n,ntime        
-REAL :: hs_t, delt, f_1, f_2, f_3
-!REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
-!REAL, allocatable :: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
-REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,ght0
-REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, hs, phi, ken, ght, us1,us2,us3, vs1,vs2,vs3
+REAL :: delt, f_1, f_2, f_3, hs_t
+REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0
+REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, ken, ght, us1, us2, us3, vs1, vs2, vs3!, hs 
+REAL, Dimension(:), ALLOCATABLE :: hs
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
@@ -125,7 +124,7 @@ V(1:Nx,2:Ny-1) = 0.1                        !horizontal velocity
 
 
 do i = 1, Nx
-    h(i,:) = h0-hs_t(i)   !we only have the height of the topography so we account for fluid above
+    h(i,:) = h0 - hs(i)   !we only have the height of the topography so we account for fluid above
 end do 
 
 hu0(1,:,1) = (h(Nx,:) + h(2,:))/2.0
@@ -174,8 +173,8 @@ end do
 !begin momentum :mike:
 
 do i = 1, Nx
-    z0(i,1)=0.
-    z0(i,Ny)=0.
+    z0(i,1,:)=0.
+    z0(i,Ny,:)=0.
 end do
 
 do j=2,Ny-1
@@ -234,7 +233,7 @@ end do
 
 do i = 1, Nx-1
 	do j = 1, Ny-1
-   		 ken0(i,j,1) )=(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1**2))/4.
+   		 ken0(i,j,1) =(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1**2))/4.
 	end do
 end do
 
@@ -244,28 +243,34 @@ us3 = us0(:,:,3)
 vs1 = vs0(:,:,1)
 vs2 = vs0(:,:,2)
 vs3 = vs0(:,:,3)
-hu1 = hu0(:,:,1)
-hu2 = hu0(:,:,2)
-hu3 = hu0(:,:,3)
-hv1 = hv0(:,:,1) 
-hv2 = hv0(:,:,2)
-hv3 = hv0(:,:,3)
-
-! define momentum coefficients from eq. 3.13 
+hu1(:,:,1) = hu0(:,:,1) !***Tried to assign 2 dimensional array to an allocated 3 dimensional array :: hotfix; give 2d arrays (hu#,hv#) a static third dim.
+hu2(:,:,2) = hu0(:,:,2)
+hu3(:,:,3) = hu0(:,:,3)
+hv1(:,:,1) = hv0(:,:,1) 
+hv2(:,:,2) = hv0(:,:,2)
+hv3(:,:,3) = hv0(:,:,3) !**if this works, do we need the three different **# vars for hu and hv? can we just assign them to the first three spaces of the array?
+!as so:
+!hu(:,:,1)= hu0 (:,:,1)
+!hu(:,:,2)= hu0 (:,:,2)
+!hu(:,:,3)= hu0 (:,:,3)
+!hv(:,:,1) = hv0(:,:,1) 
+!hv(:,:,2) = hv0(:,:,2)
+!hv(:,:,3) = hv0(:,:,3) !**it cuts down on vars, look through the rest of the code to see if it could be implemented
+! define momentum coefficients from eq. 3.13 (***do we need to do this still?)
 
 do n = 2,3
     do i = 2, Nx-1 
         do j = 2, Ny-1
-            h(i,j) = h(i,j)-delt*(us0(i+1,j+1,n-1)) – us0(i,j+1,n-1) + vs0(i+1,j+1,n-1) – vs0(i+1,j,n-1))/d
+            h(i,j) = h(i,j)-delt*(us0(i+1,j+1,n-1)) - (us0(i,j+1,n-1)) + (vs0(i+1,j+1,n-1)) - ((vs0(i+1,j,n-1))/d)
 	    
             u(i,j) = u(i,j)+delt*(alp0(i,j+1,n-1)*vs0(i,j,n-1)+bet0(i,j+1,n-1)*vs0(i-1,j+1,n-1)+ gam0(i,j+1,n-1)*vs0(i-1,j,n-1) &
 	    +del0(i,j+1,n-1)*vs0(i+1,j,n-1)-eps0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+eps0(i-1,j+1,n-1)*us0(i-1,j+1,n-1) &
             -(ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i-1,j+1,n-1)-ght0(i-1,j+1,n-1))/d) 
 
-            v(i,j) = v(i,j)-delt*(gam0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+del0(i,j+1,n-1)*us0(i,j+1,n-1) &
-            +alp0(I,j-1)*us0(I,j-1,n-1)+bet0(i+1,j-1,n-1)*us0(i+1,j-1,n-1)+ phi0(i+1,j+1,n-1)*vs0(i+1,j+1,n-1) &
-	    -phi0(i+1,j-1,n-1)*vs0(i+1,j-1,n-1)- (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1) &
-	    -ken0(i+1,j-1,n-1)-phi(i+1,j-1,n-1))/d))
+            v(i,j) = (v(i,j))-(delt*(gam0(i+1,j+1,n-1)))*(us0(i+1,j+1,n-1))+(del0(i,j+1,n-1))*(us0(i,j+1,n-1)) &
+             +(alp0(i,j-1,n-1))*(us0(i,j-1,n-1))+(bet0(i+1,j-1,n-1))*(us0(i+1,j-1,n-1))+ (phi0(i+1,j+1,n-1))*(vs0(i+1,j+1,n-1)) &
+	         -(phi0(i+1,j-1,n-1))*(vs0(i+1,j-1,n-1))- (ken0(i+1,j+1,n-1))+(ght0(i+1,j+1,n-1)) &
+	         -(ken0(i+1,j-1,n-1))-((phi(i+1,j-1,n-1))/d)
   
             z0(1,j,n)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d 
             z0(Nx,j,n)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d 
@@ -295,16 +300,16 @@ do n = 4, ntime
                      -f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
             
             u(i,j) = u(i,j) + f_1
-            v(i,j) = v(i,j) – f_1
+            v(i,j) = v(i,j) - f_1
         end do
     end do
 
 do i = 2, Nx-1
-        hu0(i,:) = (h(i-1,:) + h(i+1,:))/2.0
+        hu0(i,:) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
 end do
 
 do j = 2, Ny-1
-        hv0(:,j) = (h(:,j-1) + h(:,j+1))/2.0
+        hv0(:,j) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
 end do
     
 
