@@ -10,11 +10,11 @@ PROGRAM finalproject
 
 IMPLICIT NONE 
 
-INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep        
+INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep,i,j,n,ntime        
 REAL :: hs_t, delt, f_1, f_2, f_3
 !REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
 !REAL, allocatable :: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
-REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0, ght0
+REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,us1,us2,us3,vs0,vs1,vs2,vs3,ght0
 REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, hs, phi, ken, ght
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
@@ -84,7 +84,15 @@ allocate(hv2(Nx,Ny,3))
 allocate(hv3(Nx,Ny,3))
 
 allocate(us0(Nx,Ny,3))
+allocate(us1(Nx,Ny,3))
+allocate(us2(Nx,Ny,3))
+allocate(us3(Nx,Ny,3))
+
 allocate(vs0(Nx,Ny,3)) 
+allocate(vs1(Nx,Ny,3)) 
+allocate(vs2(Nx,Ny,3)) 
+allocate(vs3(Nx,Ny,3)) 
+
 allocate(alp0(Nx,Ny,3)) 
 allocate(bet0(Nx,Ny,3))
 allocate(gam0(Nx,Ny,3))
@@ -300,15 +308,15 @@ end do
     
 
 
-    us(:,:) = hu0(:,:)*u(:,:)
-    vs(:,:) = hv0(:,:)*v(:,:)
+    us0(:,:) = hu0(:,:)*u(:,:)
+    vs0(:,:) = hv0(:,:)*v(:,:)
 
     us1 = us2
     us2 = us3
-    us3 = us
+    us3 = us0
     vs1 = vs2
     vs2 = vs3
-    vs3 = vs
+    vs3 = vs0
     hu1 = hu2
     hu2 = hu3
     hu3 = hu0
