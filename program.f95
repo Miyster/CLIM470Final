@@ -109,10 +109,10 @@ allocate(ght(Nx, Ny))                                     ! geopotential
 allocate(ken(Nx, Ny))                                     ! kinetic energy 
 
 
-allocate (h(Nx,Ny)) !Error: Shape specification for allocatable scalar at (1)
-allocate (u(Nx,Ny))
-allocate (v(Nx,Ny))                                        ! vertical velocity 
-allocate (z(Nx,Ny))
+allocate(h(Nx,Ny)) !Error: Shape specification for allocatable scalar at (1)
+allocate(u(Nx,Ny))
+allocate(v(Nx,Ny))                                        ! vertical velocity 
+allocate(z(Nx,Ny))
 h0 = 4999		                                     !top of fluid
 !add remaining new variables and initial conditions for q etc (Done?)
 
