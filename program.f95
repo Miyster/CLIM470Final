@@ -265,7 +265,7 @@ do n = 2,3
             v(i,j) = v(i,j)-delt*(gam0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+del0(i,j+1,n-1)*us0(i,j+1,n-1) &
             +alp0(I,j-1)*us0(I,j-1,n-1)+bet0(i+1,j-1,n-1)*us0(i+1,j-1,n-1)+ phi0(i+1,j+1,n-1)*vs0(i+1,j+1,n-1) &
 	    -phi0(i+1,j-1,n-1)*vs0(i+1,j-1,n-1)- (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1) &
-	    -ken0(i+1,j-1,n-1)-phi(i+1,j-1,n-1)/d)
+	    -ken0(i+1,j-1,n-1)-phi(i+1,j-1,n-1))/d))
   
             z0(1,j,n)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d 
             z0(Nx,j,n)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d 
