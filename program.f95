@@ -14,7 +14,7 @@ INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep
 REAL :: hs_t, delt, f_1, f_2, f_3
 !REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
 !REAL, allocatable :: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
-REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hv0,hq0,us0,vs0, ght0
+REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hq0,us0,vs0, ght0
 REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, hs, phi, ken, ght
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
@@ -74,6 +74,9 @@ SELECT CASE (d)
 allocate(hu0(Nx,Ny,3)) 
 allocate(hv0(Nx,Ny,3))
 allocate(hq0(Nx,Ny,3))
+allocate(hu1(Nx,Ny,3)) 
+allocate(hu2(Nx,Ny,3)) 
+allocate(hu3(Nx,Ny,3)) 
 allocate(us0(Nx,Ny,3))
 allocate(vs0(Nx,Ny,3)) 
 allocate(alp0(Nx,Ny,3)) 
@@ -257,7 +260,7 @@ end do
 
 ! what is hq0??????? add in parentheses
 hq0(:,:,n) = ()
-q0(:,:,n) = (fcor+z0(:,:,n))/hq0(:,:,n) 
+q0(:,:,n) = (f_cor+z0(:,:,n))/hq0(:,:,n) 
 
 do i = 1,Nx
    ght0(i,:,n) = g*(h(i,:)+hs(i))
@@ -282,7 +285,7 @@ do n = 4, ntime
     end do
 
 do i = 2, Nx-1
-        hu(i,:) = (h(i-1,:) + h(i+1,:))/2.0
+        hu0(i,:) = (h(i-1,:) + h(i+1,:))/2.0
 end do
 
 do j = 2, Ny-1
@@ -291,7 +294,7 @@ end do
     
 
 
-    us(:,:) = hu(:,:)*u(:,:)
+    us(:,:) = hu0(:,:)*u(:,:)
     vs(:,:) = hv(:,:)*v(:,:)
 
     us1 = us2
@@ -302,7 +305,7 @@ end do
     vs3 = vs
     hu1 = hu2
     hu2 = hu3
-    hu3 = hu
+    hu3 = hu0
     hv1 = hv2 
     hv2 = hv3
     hv3 = hv
