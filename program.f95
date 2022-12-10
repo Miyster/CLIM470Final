@@ -259,11 +259,13 @@ do n = 2,3
             h(i,j) = h(i,j)-delt*(us0(i+1,j+1,n-1)) – us0(i,j+1,n-1) + vs0(i+1,j+1,n-1) – vs0(i+1,j,n-1))/d
 	    
             u(i,j) = u(i,j)+delt*(alp0(i,j+1,n-1)*vs0(i,j,n-1)+bet0(i,j+1,n-1)*vs0(i-1,j+1,n-1)+ gam0(i,j+1,n-1)*vs0(i-1,j,n-1) &
-	    +del0(i,j+1,n-1)*vs0(i+1,j,n-1)-eps0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+eps0(i-1,j+1,n-1)*us0(i-1,j+1,n-1)-
-            (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i-1,j+1,n-1)-ght0(i-1,j+1,n-1))/d) 
+	    +del0(i,j+1,n-1)*vs0(i+1,j,n-1)-eps0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+eps0(i-1,j+1,n-1)*us0(i-1,j+1,n-1) &
+            -(ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i-1,j+1,n-1)-ght0(i-1,j+1,n-1))/d) 
 
-            v(i,j) = v(i,j)-delt*(gam0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+del0(i,j+1,n-1)*us0(i,j+1,n-1)+
-            alp0(I,j-1)*us0(I,j-1,n-1)+bet0(i+1,j-1,n-1)*us0(i+1,j-1,n-1)+ phi0(i+1,j+1,n-1)*vs0(i+1,j+1,n-1)-phi0(i+1,j-1,n-1)*vs0(i+1,j-1,n-1)- (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1)-ken0(i+1,j-1,n-1)-phi(i+1,j-1,n-1)/d)
+            v(i,j) = v(i,j)-delt*(gam0(i+1,j+1,n-1)*us0(i+1,j+1,n-1)+del0(i,j+1,n-1)*us0(i,j+1,n-1) &
+            +alp0(I,j-1)*us0(I,j-1,n-1)+bet0(i+1,j-1,n-1)*us0(i+1,j-1,n-1)+ phi0(i+1,j+1,n-1)*vs0(i+1,j+1,n-1) &
+	    -phi0(i+1,j-1,n-1)*vs0(i+1,j-1,n-1)- (ken0(i+1,j+1,n-1)+ght0(i+1,j+1,n-1) &
+	    -ken0(i+1,j-1,n-1)-phi(i+1,j-1,n-1)/d)
   
             z0(1,j,n)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d 
             z0(Nx,j,n)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d 
@@ -288,9 +290,9 @@ do n = 4, ntime
     nstep = nstep + 1
     do i = 2, Nx-1
         do j = 2, Ny-1
-            h(i,j) = h(i,j)-f_1*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j))+
-                     f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-
-                     f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
+            h(i,j) = h(i,j)-f_1*(us1(i+1,j+1)-us1(i,j+1)+vs1(i+1,j+1)-vs1(i+1,j)) &
+                     +f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j)) &
+                     -f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
             
             u(i,j) = u(i,j) + f_1
             v(i,j) = v(i,j) – f_1
