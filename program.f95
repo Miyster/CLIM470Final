@@ -11,7 +11,7 @@ PROGRAM finalproject
 IMPLICIT NONE 
 
 INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep        
-REAL :: hs_t, delt, an, an_1, an_2, an_3
+REAL :: hs_t, delt, f_1, f_2, f_3
 !REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
 !REAL, allocatable :: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
 REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hv0,hq0,us0,vs0, ght0
@@ -41,7 +41,7 @@ REAL, parameter:: f_cor=10e-04, g=9.8
 
     f_1= (23*delt)/12                           !alphas for 3rd order adams-bashforth schemes, double check these 
     f_2 = (4*delt)/3
-    f_3 = (5*delt)/12	!are these supposed to be an_1? did we change the name? if so update or declare
+    f_3 = (5*delt)/12	
     
 
 
@@ -151,8 +151,8 @@ do j = 2, Ny-1
     hv0(:,j,n) = (h(:,j-1) + h(:,j+1))/2.0
 end do 
 
-us0(:,:,n) = hu0(:,:,n)*u(:,:)
-vs0(:,:,n) = hv0(:,:,n)*v(:,:)
+!us0(:,:,n) = hu0(:,:,n)*u(:,:)
+!vs0(:,:,n) = hv0(:,:,n)*v(:,:)
 
 end do
 !begin momentum :mike:
