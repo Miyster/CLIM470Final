@@ -276,8 +276,8 @@ do n = 4, ntime
                      f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j))-
                      f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
             
-            u(i,j) = u(i,j) + f_1*
-            v(i,j) = v(i,j) – f_1*
+            u(i,j) = u(i,j) + f_1
+            v(i,j) = v(i,j) – f_1
         end do
     end do
 
