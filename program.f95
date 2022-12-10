@@ -12,8 +12,8 @@ IMPLICIT NONE
 
 INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep        
 REAL :: hs_t, delt, an, an_1, an_2, an_3
-REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:)
-REAL, allocatable:: u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
+REAL, pointer :: alp0(:,:,:),bet0(:,:,:),gam0(:,:,:),del(:,:,:),eps0(:,:,:),ken0(:,:,:),phi0(:,:,:),q0(:,:,:),z0(:,:,:),hu0(:,:,:),hv0(:,:,:),hq0(:,:,:),us0(:,:,:),vs0(:,:,:),u(:,:),v(:,:),h(:,:),z(:,:),q(:,:),hs(:,:),phi(:,:),ken(:,:), hs(:,:)
+!REAL, allocatable:: 
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
@@ -87,7 +87,7 @@ allocate(z0(Nx,Ny,3))
 allocate(z(Nx,Ny))
 allocate(q(Nx,Ny))                                       ! absolute potential vorticity                                       
 allocate(ght(Nx, Ny))                                     ! geopotential 
-allocate ken(Nx, Ny))                                     ! kinetic energy 
+allocate(ken(Nx, Ny))                                     ! kinetic energy 
 
 
 allocate (h(Nx,Ny)) !Error: Shape specification for allocatable scalar at (1)
