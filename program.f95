@@ -75,7 +75,6 @@ allocate(hu0(Nx,Ny,3))
 allocate(hu1(Nx,Ny,3)) 
 allocate(hu2(Nx,Ny,3)) 
 allocate(hu3(Nx,Ny,3))
-
 allocate(hq0(Nx,Ny,3))
 
 allocate(hv0(Nx,Ny,3))
