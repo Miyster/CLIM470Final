@@ -273,7 +273,7 @@ do n = 2,3
 end do
 
 ! what is hq0??????? add in parentheses
-hq0(:,:,n) = ()
+!hq0(:,:,n) = ()
 q0(:,:,n) = (f_cor+z0(:,:,n))/hq0(:,:,n) 
 
 do i = 1,Nx
