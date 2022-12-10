@@ -12,8 +12,10 @@ IMPLICIT NONE
 
 INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep,i,j,n,ntime        
 REAL :: delt, f_1, f_2, f_3, hs_t
-REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,q0,z0,hu0,hu1,hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0
-REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, ken, ght, us1, us2, us3, vs1, vs2, vs3!, hs 
+REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,alp1,bet1,gam1,del1,eps1,&
+    ken1,phi1,alp2,bet2,gam2,del2,eps2,ken2,phi2,alp3,bet3,gam3,del3,eps3,ken3,phi3,q0,z0,hu0,hu1,&
+    hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0
+REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, ken, ght, ght1, ght2, ght3, us1, us2, us3, vs1, vs2, vs3!, hs 
 REAL, Dimension(:), ALLOCATABLE :: hs
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
@@ -299,34 +301,34 @@ do n = 4, ntime
                      +f_2*(us2(i+1,j+1)-us2(i,j+1)+vs2(i+1,j+1)-vs2(i+1,j)) &
                      -f_3*(us3(i+1,j+1)-us3(i,j+1)+vs3(i+1,j+1)-vs3(i+1,j))
             
-            u(i,j) = u(i,j) + f_1*(alp1(i,j+1)*vs1(i,j)+bet1(i,j+1)*vs1(i-1,j+1)
-	    	+gam1(i,j+1)*vs1(i-1,j)+del1(i,j+1)*vs1(i+1,j)
-		-eps1(i+1,j+1)*us1(i+1,j+1)+eps1(i-1,j+1)*us1(i-1,j+1)
-		-(ken1(i+1,j+1)+ght1(i+1,j+1)-ken1(i-1,j+1)-ght1(i-1,j+1))/d)
-		-f_2*(alp2(i,j+1)*vs2(i,j)+bet2(i,j+1)*vs2(i-1,j+1)
-	    	+gam2(i,j+1)*vs2(i-1,j)+del2(i,j+1)*vs2(i+1,j)
-		-eps2(i+1,j+1)*us2(i+1,j+1)+eps2(i-1,j+1)*us2(i-1,j+1)
-		-(ken2(i+1,j+1)+ght2(i+1,j+1)-ken2(i-1,j+1)-ght2(i-1,j+1))/d)
-		+f_3*(alp3(i,j+1)*vs3(i,j)+bet3(i,j+1)*vs3(i-1,j+1)
-	    	+gam3(i,j+1)*vs3(i-1,j)+del3(i,j+1)*vs3(i+1,j)
-		-eps3(i+1,j+1)*us3(i+1,j+1)+eps3(i-1,j+1)*us3(i-1,j+1)
+            u(i,j) = u(i,j) + f_1*(alp1(i,j+1)*vs1(i,j)+bet1(i,j+1)*vs1(i-1,j+1) &
+	    	+gam1(i,j+1)*vs1(i-1,j)+del1(i,j+1)*vs1(i+1,j) &
+		-eps1(i+1,j+1)*us1(i+1,j+1)+eps1(i-1,j+1)*us1(i-1,j+1) &
+		-(ken1(i+1,j+1)+ght1(i+1,j+1)-ken1(i-1,j+1)-ght1(i-1,j+1))/d) &
+		-f_2*(alp2(i,j+1)*vs2(i,j)+bet2(i,j+1)*vs2(i-1,j+1)&
+	    	+gam2(i,j+1)*vs2(i-1,j)+del2(i,j+1)*vs2(i+1,j)&
+		-eps2(i+1,j+1)*us2(i+1,j+1)+eps2(i-1,j+1)*us2(i-1,j+1)&
+		-(ken2(i+1,j+1)+ght2(i+1,j+1)-ken2(i-1,j+1)-ght2(i-1,j+1))/d)&      !***I think we can optomize this code: have all of the **# coefficients 
+		+f_3*(alp3(i,j+1)*vs3(i,j)+bet3(i,j+1)*vs3(i-1,j+1)&                !be 3 dimension arrays, and just call (i*,j*,1), (i*,j*,2),(i*,j*,3) of each array. (can we also add the 0?) 
+	    	+gam3(i,j+1)*vs3(i-1,j)+del3(i,j+1)*vs3(i+1,j)&                 !*Also, we may need to parenthesize the arrays in order for the compiler to run without error (see 266-277)
+		-eps3(i+1,j+1)*us3(i+1,j+1)+eps3(i-1,j+1)*us3(i-1,j+1)&
 		-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i-1,j+1)-ght3(i-1,j+1))/d)
             
-	    v(i,j) = v(i,j) - f_1*(gam1(i+1,j+1)*us1(i+1,j+1)+del1(i,j+1)*us1(i,j+1)
-	    		+alp1(i,j-1)*us1(i,j-1)+bet1(i+1,j-1)*us1(i+1,j-1)
-			+phi1(i+1,j+1)*vs1(i+1,j+1)-phi1(i+1,j-1)*vs1(i+1,j-1)
-			-(ken1(i+1,j+1)+ght1(i+1,j+1)-ken1(i+1,j-1)-ght1(i+1,j-1))/d)
-			+f_2*(gam2(i+1,j+1)*us2(i+1,j+1)+del2(i,j+1)*us2(i,j+1)
-	    		+alp2(i,j-1)*us2(i,j-1)+bet2(i+1,j-1)*us2(i+1,j-1)
-			+phi2(i+1,j+1)*vs2(i+1,j+1)-phi2(i+1,j-1)*vs2(i+1,j-1)
-			-(ken2(i+1,j+1)+ght2(i+1,j+1)-ken2(i+1,j-1)-ght2(i+1,j-1))/d)
-			-f_3*(gam3(i+1,j+1)*us3(i+1,j+1)+del3(i,j+1)*us3(i,j+1)
-	    		+alp3(i,j-1)*us3(i,j-1)+bet3(i+1,j-1)*us3(i+1,j-1)
-			+phi3(i+1,j+1)*vs3(i+1,j+1)-phi3(i+1,j-1)*vs3(i+1,j-1)
-			-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i+1,j-1)-ght3(i+1,j-1))/d)
+	    v(i,j) = v(i,j) - f_1*(gam1(i+1,j+1)*us1(i+1,j+1)+del1(i,j+1)*us1(i,j+1)&
+	    		+alp1(i,j-1)*us1(i,j-1)+bet1(i+1,j-1)*us1(i+1,j-1)&
+			+phi1(i+1,j+1)*vs1(i+1,j+1)-phi1(i+1,j-1)*vs1(i+1,j-1)&
+			-(ken1(i+1,j+1)+ght1(i+1,j+1)-ken1(i+1,j-1)-ght1(i+1,j-1))/d)&
+			+f_2*(gam2(i+1,j+1)*us2(i+1,j+1)+del2(i,j+1)*us2(i,j+1)&
+	    		+alp2(i,j-1)*us2(i,j-1)+bet2(i+1,j-1)*us2(i+1,j-1)&
+			+phi2(i+1,j+1)*vs2(i+1,j+1)-phi2(i+1,j-1)*vs2(i+1,j-1)&
+			-(ken2(i+1,j+1)+ght2(i+1,j+1)-ken2(i+1,j-1)-ght2(i+1,j-1))/d)&
+			-f_3*(gam3(i+1,j+1)*us3(i+1,j+1)+del3(i,j+1)*us3(i,j+1)&
+	    		+alp3(i,j-1)*us3(i,j-1)+bet3(i+1,j-1)*us3(i+1,j-1)&
+			+phi3(i+1,j+1)*vs3(i+1,j+1)-phi3(i+1,j-1)*vs3(i+1,j-1)&
+			-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i+1,j-1)-ght3(i+1,j-1))/d)&
         end do
     end do
-
+end do
 do i = 2, Nx-1
         hu0(i,:) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
 end do
