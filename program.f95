@@ -155,56 +155,68 @@ end do
 !begin momentum :mike:
 
 do i = 1, Nx
-       z0(i,1)=0.
+    z0(i,1)=0.
     z0(i,Ny)=0.
 end do
+
 do j=2,Ny-1
     z0(1,j,1)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d
     z0(Nx,j,1)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d
 end do
+
 do i=2,Nx-1
     z0(i,1,1)=(-u(i,2)+v(i+1,1)-v(i-1,1))/d
     z0(i,Ny,1)=(u(i,Ny-1)+v(i+1,Ny)-v(i-1,Ny))/d
 end do
+
 do i=2,Nx-1
-do j=2,Ny-1
-    z0(i,j,1)=(u(i,j-1)-u(i,j+1)+v(i+1,j)-v(i-1,j))/d
+	do j=2,Ny-1
+    		z0(i,j,1)=(u(i,j-1)-u(i,j+1)+v(i+1,j)-v(i-1,j))/d
+	end do
 end do
-end do
-    hq0(1,:,1)=(h(1,1) + h(Nx,1))/2.0
+
+    hq0(1,:,1)=(h(1,1) + h(Nx,1))/2.0 !!!!!!!!What are these two lines? Are these in the correct spot?
     hq0(1,Ny,1)=(h(1,Ny-1) + h(Nx,Ny-2))/2.0
+    
 do i = 2,Nx
     hq0(i,1,1)=(h(i,1) + h(i-1,1))/2.0
     hq0(i,Ny,1)=(h(i,Ny-1) + h(i-1,Ny-1))/2.0
 end do
+
 do j = 2,Ny-1
     hq0(1,j,1)=(h(1,j) + h(i-1,j) + h(Nx,j) + h(Nx-1,j-1))/4.0
 end do
+
 do j = 2,Ny-1
-do i = 2,Nx
-    hq0(i,j,0)=(h(i,j) + h(i-1,j) + h(i-1,j-1) + h(i,j-1))/4.0
+	do i = 2,Nx
+    		hq0(i,j,0)=(h(i,j) + h(i-1,j) + h(i-1,j-1) + h(i,j-1))/4.0
+	end do
 end do
-end do
+
 do j = 1,Ny
+	do i = 1,Nx
+    		q0(i,j,1)=(z0(i,j,0) + f_cor)/hq0(i,j,0)
+	end do
+end do
+
 do i = 1,Nx
-    q0(i,j,1)=(z0(i,j,0) + f_cor)/hq0(i,j,0)
+	do j = 1, Ny
+    		ght0(i,j,1) = g*(hs(i) + h(i,j))
+	end do
 end do
-end do
-do i = 1,Nx
-do j = 1, Ny
-    ght0(i,j,1) = g*(hs(i) + h(i,j))
-end do
-end do
-do = 1, Nx
+
+do i = 1, Nx
     ken0(i,Ny,1)=0.
 end do
-do j = 1,Ny-1
+
+do j = 1, Ny-1
     ken0(Nx,j,1)=(u(Nx-1,j)**2 + u(1,j)**2 + v(Nx-1,j)**2 + v(1,Ny+1**2))/4.
 end do
+
 do i = 1, Nx-1
-do j = 1, Ny-1
-    ken0(i,j,1) )=(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1**2))/4.
-end do
+	do j = 1, Ny-1
+   		 ken0(i,j,1) )=(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1**2))/4.
+	end do
 end do
 
 us1 = us0(:,:,1)
@@ -235,17 +247,18 @@ do n = 2,3
   
             z0(1,j,n)=(u(1,j-1)-u(1,j+1)+v(2,j)-v(Nx,j))/d 
             z0(Nx,j,n)=(u(Nx,j-1)-u(1,j+1)+v(1,j)-v(Nx-1,j))/d 
-            
-
         end do 
     end do
 end do
+
 ! what is hq0??????? add in parentheses
 hq0(:,:,n) = ()
 q0(:,:,n) = (fcor+z0(:,:,n))/hq0(:,:,n) 
+
 do i = 1,Nx
     ght0(i,:,n) = g*(h(i,:)+hs(i))
 end do
+
 ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
 
 ! need to add in u(i,j) and v(i,j) for momentum
@@ -264,13 +277,13 @@ do n = 4, ntime
         end do
     end do
 
-    do i = 2, Nx-1
+do i = 2, Nx-1
         hu(i,:) = (h(i-1,:) + h(i+1,:))/2.0
-    end do
+end do
 
-    do j = 2, Ny-1
+do j = 2, Ny-1
         hv(:,j) = (h(:,j-1) + h(:,j+1))/2.0
-    end do
+end do
     
 
 
