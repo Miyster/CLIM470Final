@@ -46,14 +46,14 @@ REAL, parameter:: f_cor=10e-04, g=9.8
 !Establish topography
 
 SELECT CASE (d)
-	CASE (5e+05)                       !topography variable for first resolution
+	CASE (500000)                       !topography variable for first resolution
         	hs(Nx/2) = hs_t
-	CASE (2.5e+05)                    !topography variables for second resolution
+	CASE (250000)                    !topography variables for second resolution
         	hs(Nx/2-1) = 1e+03
         	hs(Nx/2) = hs_t
         	hs(Nx/2+1) = 1e+03
 
-	CASE (1.25e+05)                    !topography variable for third resolution
+	CASE (125000)                    !topography variable for third resolution
         	hs(Nx/2-2) = 0.5e+03
         	hs(Nx/2-1) = 1.5e+03
         	hs(Nx/2) = hs_t
