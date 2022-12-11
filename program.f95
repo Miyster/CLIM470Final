@@ -241,12 +241,12 @@ do i = 1, Nx-1
 	end do
 end do
 
-us1 = us0(:,:,1)
-us2 = us0(:,:,2)
-us3 = us0(:,:,3)
-vs1 = vs0(:,:,1)
-vs2 = vs0(:,:,2)
-vs3 = vs0(:,:,3)
+us1(:,:,1) = us0(:,:,1)
+us2(:,:,2) = us0(:,:,2)
+us3(:,:,3) = us0(:,:,3)
+vs1(:,:,1) = vs0(:,:,1)
+vs2(:,:,2) = vs0(:,:,2)
+vs3(:,:,3) = vs0(:,:,3)
 hu1(:,:,1) = hu0(:,:,1) !***Tried to assign 2 dimensional array to an allocated 3 dimensional array :: hotfix; give 2d arrays (hu#,hv#) a static third dim.
 hu2(:,:,2) = hu0(:,:,2)
 hu3(:,:,3) = hu0(:,:,3)
