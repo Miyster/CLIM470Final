@@ -393,7 +393,9 @@ end do
         !nstep = 0
     !end if 
 !end do !time loop 
-	print*, h, u, V
+print*, "h",h
+print*, "u",u
+print*, "V",V
 
 !Michael and Taylor: begin momentum equations after Brian and Lauren finish
 
