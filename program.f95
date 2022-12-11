@@ -357,6 +357,7 @@ end do
     hv2 = hv3
     hv3 = hv0
 
+do i=1,1440
     if (nstep == 1440) then
         write(10,*) h, u, V
         nstep = 0
