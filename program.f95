@@ -295,7 +295,7 @@ ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
 ! added in u(i,j) and v(i,j) for momentum
 nstep = 4
 
-do n = 4, ntime
+do n = 4, 1440
     nstep = nstep + 1
     do i = 2, Nx-1
         do j = 2, Ny-1
