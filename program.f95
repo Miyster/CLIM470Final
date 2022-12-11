@@ -21,7 +21,7 @@ REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
 
-open (unit = 10, file = '470dat1.txt', status = 'new', action = 'readwrite', iostat = ierror)
+!open (unit = 10, file = '470dat1.txt', status = 'new', action = 'readwrite', iostat = ierror)
 !open(unit = 99, file = 'info.dat', status = 'new', action = 'readwrite', iostat = ierror)
 
 !Initialize domain and resolution
@@ -381,12 +381,12 @@ do n = 4, 1440
     hv3 = hv0 
     
     if (nstep == 1440) then
-    	write(10,*) "h",h
-	write(10,*) "u",u
-	write(10,*) "v",v
-    	 
-	!print*, "u",u
-	!print*, "v",v
+    	!write(10,*) "h",h
+	!write(10,*) "u",u
+	!write(10,*) "v",v
+    	print*, "h",h 
+	print*, "u",u
+	print*, "v",v
         !write(10,*) h, u, V
         nstep = 0
     end if 
