@@ -379,7 +379,7 @@ do n = 4, 1440
     if (nstep == 1440) then
     	print*, "h",h
 	print*, "u",u
-	print*, "V",V
+	print*, "v",v
         !write(10,*) h, u, V
         nstep = 0
     end if 
