@@ -21,7 +21,7 @@ REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
 
-open (10, file = '470dat1.dat')
+open (10, file = '470dat1.txt')
 
 !Initialize domain and resolution
     Lx = 6e+06                                  !domain size in x direction, real numbers
