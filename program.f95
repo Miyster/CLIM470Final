@@ -360,17 +360,6 @@ do n = 4, 1440
 			-(ken3(i+1,j+1,3)+ght3(i+1,j+1)-ken3(i+1,j-1,3)-ght3(i+1,j-1))/d)
         end do
     end do
-end do
-do i = 2, Nx-1
-        hu0(i,:,1) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
-end do
-
-do j = 2, Ny-1
-        hv0(:,j,1) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
-end do
-    
-
-
     us0(:,:,1) = hu0(:,:,1)*u(:,:)
     vs0(:,:,1) = hv0(:,:,1)*v(:,:)
 
@@ -385,9 +374,8 @@ end do
     hu3 = hu0
     hv1 = hv2 
     hv2 = hv3
-    hv3 = hv0
-
-do i=1,1440
+    hv3 = hv0 
+    
     if (nstep == 1440) then
     	print*, "h",h
 	print*, "u",u
@@ -395,7 +383,29 @@ do i=1,1440
         !write(10,*) h, u, V
         nstep = 0
     end if 
-end do !time loop 
+end do
+
+do i = 2, Nx-1
+        hu0(i,:,1) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
+end do
+
+do j = 2, Ny-1
+        hv0(:,j,1) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
+end do
+    
+
+
+
+
+!do i=1,1440
+    !if (nstep == 1440) then
+    	!print*, "h",h
+	!print*, "u",u
+	!print*, "V",V
+        !write(10,*) h, u, V
+        !nstep = 0
+   ! end if 
+!end do !time loop 
 
 
 !Michael and Taylor: begin momentum equations after Brian and Lauren finish
