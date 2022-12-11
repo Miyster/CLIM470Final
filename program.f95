@@ -314,7 +314,7 @@ do n = 4, ntime
 		+f_3*(alp3(i,j+1)*vs3(i,j)+bet3(i,j+1)*vs3(i-1,j+1)&                !be 3 dimension arrays, and just call (i*,j*,1), (i*,j*,2),(i*,j*,3) of each array. (can we also add the 0?) 
 	    	+gam3(i,j+1)*vs3(i-1,j)+del3(i,j+1)*vs3(i+1,j)&                 !*Also, we may need to parenthesize the arrays in order for the compiler to run without error (see 266-277)
 		-eps3(i+1,j+1)*us3(i+1,j+1)+eps3(i-1,j+1)*us3(i-1,j+1)&
-		-(ken3(i+1,j+1,1)+ght3(i+1,j+1)-ken3(i-1,j+1)-ght3(i-1,j+1))/d)
+		-(ken3(i+1,j+1,1)+ght3(i+1,j+1)-ken3(i-1,j+1,1)-ght3(i-1,j+1))/d)
             
 	    v(i,j) = v(i,j) - f_1*(gam1(i+1,j+1)*us1(i+1,j+1)+del1(i,j+1)*us1(i,j+1)&
 	    		+alp1(i,j-1)*us1(i,j-1)+bet1(i+1,j-1)*us1(i+1,j-1)&
