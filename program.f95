@@ -107,7 +107,7 @@ allocate(z0(Nx,Ny,3))
 !allocate(z(Nx,Ny))
 allocate(q(Nx,Ny))                                       ! absolute potential vorticity                                       
 allocate(ght(Nx,Ny))                                     ! geopotential 
-allocate(ken(Nx,Ny,3)) 					 !kinetic energy 
+allocate(ken(Nx,Ny)) 					 !kinetic energy 
 allocate(ken1(Nx,Ny,3)) 
 allocate(ken2(Nx,Ny,3)) 
 allocate(ken3(Nx,Ny,3)) 
@@ -305,38 +305,38 @@ do n = 4, ntime
             
             u(i,j) = u(i,j) + f_1*(alp1(i,j+1)*vs1(i,j)+bet1(i,j+1)*vs1(i-1,j+1) &
 	    	+gam1(i,j+1)*vs1(i-1,j)+del1(i,j+1)*vs1(i+1,j) &
-		-eps1(i+1,j+1)*us1(i+1,j+1)+eps1(i-1,j+1)*us1(i-1,j+1) &
+		-eps1(i+1,j+1,1)*us1(i+1,j+1)+eps1(i-1,j+1,1)*us1(i-1,j+1) &
 		-(ken1(i+1,j+1,1)+ght1(i+1,j+1)-ken1(i-1,j+1,1)-ght1(i-1,j+1))/d) &
 		-f_2*(alp2(i,j+1)*vs2(i,j)+bet2(i,j+1)*vs2(i-1,j+1)&
 	    	+gam2(i,j+1)*vs2(i-1,j)+del2(i,j+1)*vs2(i+1,j)&
-		-eps2(i+1,j+1)*us2(i+1,j+1)+eps2(i-1,j+1)*us2(i-1,j+1)&
-		-(ken2(i+1,j+1,1)+ght2(i+1,j+1)-ken2(i-1,j+1,1)-ght2(i-1,j+1))/d)&      !***I think we can optomize this code: have all of the **# coefficients 
+		-eps2(i+1,j+1,2)*us2(i+1,j+1)+eps2(i-1,j+1,2)*us2(i-1,j+1)&
+		-(ken2(i+1,j+1,2)+ght2(i+1,j+1)-ken2(i-1,j+1,2)-ght2(i-1,j+1))/d)&      !***I think we can optomize this code: have all of the **# coefficients 
 		+f_3*(alp3(i,j+1)*vs3(i,j)+bet3(i,j+1)*vs3(i-1,j+1)&                !be 3 dimension arrays, and just call (i*,j*,1), (i*,j*,2),(i*,j*,3) of each array. (can we also add the 0?) 
 	    	+gam3(i,j+1)*vs3(i-1,j)+del3(i,j+1)*vs3(i+1,j)&                 !*Also, we may need to parenthesize the arrays in order for the compiler to run without error (see 266-277)
-		-eps3(i+1,j+1)*us3(i+1,j+1)+eps3(i-1,j+1)*us3(i-1,j+1)&
-		-(ken3(i+1,j+1,1)+ght3(i+1,j+1)-ken3(i-1,j+1,1)-ght3(i-1,j+1))/d)
+		-eps3(i+1,j+1,3)*us3(i+1,j+1)+eps3(i-1,j+1,3)*us3(i-1,j+1)&
+		-(ken3(i+1,j+1,3)+ght3(i+1,j+1)-ken3(i-1,j+1,3)-ght3(i-1,j+1))/d)
             
 	    v(i,j) = v(i,j) - f_1*(gam1(i+1,j+1)*us1(i+1,j+1)+del1(i,j+1)*us1(i,j+1)&
 	    		+alp1(i,j-1)*us1(i,j-1)+bet1(i+1,j-1)*us1(i+1,j-1)&
-			+phi1(i+1,j+1)*vs1(i+1,j+1)-phi1(i+1,j-1)*vs1(i+1,j-1)&
+			+phi1(i+1,j+1,1)*vs1(i+1,j+1)-phi1(i+1,j-1,1)*vs1(i+1,j-1)&
 			-(ken1(i+1,j+1,1)+ght1(i+1,j+1)-ken1(i+1,j-1,1)-ght1(i+1,j-1))/d)&
 			+f_2*(gam2(i+1,j+1)*us2(i+1,j+1)+del2(i,j+1)*us2(i,j+1)&
 	    		+alp2(i,j-1)*us2(i,j-1)+bet2(i+1,j-1)*us2(i+1,j-1)&
-			+phi2(i+1,j+1)*vs2(i+1,j+1)-phi2(i+1,j-1)*vs2(i+1,j-1)&
-			-(ken2(i+1,j+1,1)+ght2(i+1,j+1)-ken2(i+1,j-1,1)-ght2(i+1,j-1))/d)&
+			+phi2(i+1,j+1,2)*vs2(i+1,j+1)-phi2(i+1,j-1,2)*vs2(i+1,j-1)&
+			-(ken2(i+1,j+1,2)+ght2(i+1,j+1)-ken2(i+1,j-1,2)-ght2(i+1,j-1))/d)&
 			-f_3*(gam3(i+1,j+1)*us3(i+1,j+1)+del3(i,j+1)*us3(i,j+1)&
 	    		+alp3(i,j-1)*us3(i,j-1)+bet3(i+1,j-1)*us3(i+1,j-1)&
-			+phi3(i+1,j+1)*vs3(i+1,j+1)-phi3(i+1,j-1)*vs3(i+1,j-1)&
-			-(ken3(i+1,j+1,1)+ght3(i+1,j+1)-ken3(i+1,j-1,1)-ght3(i+1,j-1))/d)
+			+phi3(i+1,j+1,3)*vs3(i+1,j+1)-phi3(i+1,j-1,3)*vs3(i+1,j-1)&
+			-(ken3(i+1,j+1,3)+ght3(i+1,j+1)-ken3(i+1,j-1,3)-ght3(i+1,j-1))/d)
         end do
     end do
 end do
 do i = 2, Nx-1
-        hu0(i,:,1) = (h(i-1,:,1) + h(i+1,:,1))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
+        hu0(i,:,1) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
 end do
 
 do j = 2, Ny-1
-        hv0(:,j,1) = (h(:,j-1,1) + h(:,j+1,1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
+        hv0(:,j,1) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
 end do
     
 
