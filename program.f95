@@ -325,7 +325,7 @@ do n = 4, ntime
 			-f_3*(gam3(i+1,j+1)*us3(i+1,j+1)+del3(i,j+1)*us3(i,j+1)&
 	    		+alp3(i,j-1)*us3(i,j-1)+bet3(i+1,j-1)*us3(i+1,j-1)&
 			+phi3(i+1,j+1)*vs3(i+1,j+1)-phi3(i+1,j-1)*vs3(i+1,j-1)&
-			-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i+1,j-1)-ght3(i+1,j-1))/d)&
+			-(ken3(i+1,j+1)+ght3(i+1,j+1)-ken3(i+1,j-1)-ght3(i+1,j-1))/d)
         end do
     end do
 end do
