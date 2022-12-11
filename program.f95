@@ -45,6 +45,7 @@ REAL, parameter:: f_cor=10e-04, g=9.8
     f_3 = (5*delt)/12	
     
 
+allocate(hs(Nx))
 
 !Establish topography
 
@@ -94,13 +95,42 @@ allocate(vs2(Nx,Ny,3))
 allocate(vs3(Nx,Ny,3)) 
 
 allocate(alp0(Nx,Ny,3)) 
+allocate(alp1(Nx,Ny,3)) 
+allocate(alp2(Nx,Ny,3)) 
+allocate(alp3(Nx,Ny,3)) 
+
 allocate(bet0(Nx,Ny,3))
+allocate(bet1(Nx,Ny,3))
+allocate(bet2(Nx,Ny,3))
+allocate(bet3(Nx,Ny,3))
+
 allocate(gam0(Nx,Ny,3))
-allocate(del0(Nx,Ny,3)) 
-allocate(eps0(Nx,Ny,3)) 
+allocate(gam1(Nx,Ny,3))
+allocate(gam2(Nx,Ny,3))
+allocate(gam3(Nx,Ny,3))
+
+allocate(del0(Nx,Ny,3))
+allocate(del1(Nx,Ny,3))
+allocate(del2(Nx,Ny,3))
+allocate(del3(Nx,Ny,3))
+
+allocate(eps0(Nx,Ny,3))
+allocate(eps1(Nx,Ny,3))
+allocate(eps2(Nx,Ny,3))
+allocate(eps3(Nx,Ny,3))
+
 allocate(ken0(Nx,Ny,3))
+
+allocate(phi(Nx,Ny,3))
 allocate(phi0(Nx,Ny,3))
+allocate(phi1(Nx,Ny,3))
+allocate(phi2(Nx,Ny,3))
+allocate(phi3(Nx,Ny,3))
+
 allocate(ght0(Nx,Ny,3))
+allocate(ght1(Nx,Ny))
+allocate(ght2(Nx,Ny))
+allocate(ght3(Nx,Ny))
  
 allocate(q0(Nx,Ny,3))
 allocate(z0(Nx,Ny,3))
