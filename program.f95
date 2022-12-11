@@ -107,8 +107,10 @@ allocate(z0(Nx,Ny,3))
 !allocate(z(Nx,Ny))
 allocate(q(Nx,Ny))                                       ! absolute potential vorticity                                       
 allocate(ght(Nx, Ny))                                     ! geopotential 
-allocate(ken(Nx, Ny))                                     ! kinetic energy 
-
+allocate(ken(Nx, Ny)) 					 !kinetic energy 
+allocate(ken1(Nx, Ny)) 
+allocate(ken2(Nx, Ny)) 
+allocate(ken3(Nx, Ny)) 
 
 allocate(h(Nx,Ny)) !Error: Shape specification for allocatable scalar at (1)
 allocate(u(Nx,Ny))
