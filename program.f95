@@ -20,6 +20,9 @@ REAL, Dimension(:), ALLOCATABLE :: hs
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
 
+
+open (10, file = '470dat1.dat')
+
 !Initialize domain and resolution
     Lx = 6e+06                                  !domain size in x direction, real numbers
     Ly = 2e+06                                  !domain size in y direction, real numbers
@@ -377,9 +380,12 @@ do n = 4, 1440
     hv3 = hv0 
     
     if (nstep == 1440) then
-    	print*, "h",h
-	print*, "u",u
-	print*, "v",v
+    	write(10,*) "h",h
+	write(10,*) "u",u
+	write(10,*) "v",v
+    	 
+	!print*, "u",u
+	!print*, "v",v
         !write(10,*) h, u, V
         nstep = 0
     end if 
