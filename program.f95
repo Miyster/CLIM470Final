@@ -332,17 +332,17 @@ do n = 4, ntime
     end do
 end do
 do i = 2, Nx-1
-        hu0(i,:) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
+        hu0(i,:,1) = (h(i-1,:,1) + h(i+1,:,1))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
 end do
 
 do j = 2, Ny-1
-        hv0(:,j) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
+        hv0(:,j,1) = (h(:,j-1,1) + h(:,j+1,1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
 end do
     
 
 
-    us0(:,:) = hu0(:,:)*u(:,:)
-    vs0(:,:) = hv0(:,:)*v(:,:)
+    us0(:,:,1) = hu0(:,:,1)*u(:,:)
+    vs0(:,:,1) = hv0(:,:,1)*v(:,:)
 
     us1 = us2
     us2 = us3
