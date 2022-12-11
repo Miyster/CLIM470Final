@@ -106,11 +106,11 @@ allocate(q0(Nx,Ny,3))
 allocate(z0(Nx,Ny,3))
 !allocate(z(Nx,Ny))
 allocate(q(Nx,Ny))                                       ! absolute potential vorticity                                       
-allocate(ght(Nx, Ny))                                     ! geopotential 
-allocate(ken(Nx, Ny)) 					 !kinetic energy 
-allocate(ken1(Nx, Ny)) 
-allocate(ken2(Nx, Ny)) 
-allocate(ken3(Nx, Ny)) 
+allocate(ght(Nx,Ny))                                     ! geopotential 
+allocate(ken(Nx,Ny,3)) 					 !kinetic energy 
+allocate(ken1(Nx,Ny,3)) 
+allocate(ken2(Nx,Ny,3)) 
+allocate(ken3(Nx,Ny,3)) 
 
 allocate(h(Nx,Ny)) !Error: Shape specification for allocatable scalar at (1)
 allocate(u(Nx,Ny))
@@ -332,11 +332,11 @@ do n = 4, ntime
     end do
 end do
 do i = 2, Nx-1
-        hu0(i,:,1) = (h(i-1,:) + h(i+1,:))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
+        hu0(i,:,1) = (h(i-1,:,1) + h(i+1,:,1))/2.0 !***need specified third dim in hu0 to assign the two dimensions in the eq to
 end do
 
 do j = 2, Ny-1
-        hv0(:,j,1) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
+        hv0(:,j,1) = (h(:,j-1,1) + h(:,j+1,1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
 end do
     
 
