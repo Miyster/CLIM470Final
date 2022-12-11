@@ -387,15 +387,16 @@ end do
     hv2 = hv3
     hv3 = hv0
 
-!do i=1,1440
-    !if (nstep == 1440) then
+do i=1,1440
+    if (nstep == 1440) then
+    	print*, "h",h
+	print*, "u",u
+	print*, "V",V
         !write(10,*) h, u, V
-        !nstep = 0
-    !end if 
-!end do !time loop 
-print*, "h",h
-print*, "u",u
-print*, "V",V
+        nstep = 0
+    end if 
+end do !time loop 
+
 
 !Michael and Taylor: begin momentum equations after Brian and Lauren finish
 
