@@ -40,7 +40,7 @@ REAL, parameter:: f_cor=10e-04, g=9.8
     ! need to initialize h0, cannot equal/exceed top of the model or 5000! 
    
 
-    delt = 10*60                                !time step (10 min) in seconds (changes for each run)
+    delt = 5*60                                !time step (10 min) in seconds (changes for each run)
     !delt = 5*60
     !delt = 2.5*60
 
