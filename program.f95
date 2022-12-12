@@ -295,7 +295,8 @@ hv3(:,:,3) = hv0(:,:,3) !**if this works, do we need the three different **# var
                         !hv(:,:,2) = hv0(:,:,2)
                         !hv(:,:,3) = hv0(:,:,3) !**it cuts down on vars, look through the rest of the code to see if it could be implemented
 			
-! define momentum coefficients from eq. 3.13 (***do we need to do this still?)
+! define momentum coefficients from eq. 3.13 as completely specified in 3.34 (***do we need to do this still?)
+eps0(:,:,n) = (q(i+1,j+1,n)+q(i,j+1,n)-q(i,j,n)-q(i+1,j,n))/24.0
 
 do n = 2,3
     do i = 2, Nx-1 
@@ -318,7 +319,7 @@ do n = 2,3
 end do
 
 ! what is hq0??????? add in parentheses
-hq0(:,:,n) = (h(i+1/2,j+1/2)+h(i-1/2,j+1/2)+h(i-1/2,j-1/2)+h(i+1/2,j-1/2))/4.0            !Added eqn 3.15 from Arakawa for the def of hq0 for a square grid 
+hq0(:,:,n) = (h(i+1/2,j+1/2,n)+h(i-1/2,j+1/2,n)+h(i-1/2,j-1/2,n)+h(i+1/2,j-1/2,n))/4.0            !Added eqn 3.15 from Arakawa for the def of hq0 for a square grid 
 q0(:,:,n) = (f_cor+z0(:,:,n))/hq0(:,:,n) 
 
 do i = 1,Nx
