@@ -436,8 +436,8 @@ do j = 2, Ny-1
         hv0(:,j,1) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
 end do
     
-us(:,:,n) = hu0(:,:,n)*u(:,:)          ! I included these two again, will double check for errors 
-vs(:,:,n) = hv0(:,:,n)*v(:,:)
+us0(:,:,n) = hu0(:,:,n)*u(:,:)          ! I included these two again, will double check for errors 
+vs0(:,:,n) = hv0(:,:,n)*v(:,:)
 
 
 
