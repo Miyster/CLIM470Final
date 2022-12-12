@@ -298,6 +298,10 @@ hv3(:,:,3) = hv0(:,:,3) !**if this works, do we need the three different **# var
 ! define momentum coefficients from eq. 3.13 as completely specified in 3.34 (***do we need to do this still?)
 eps0(:,:,n) = (q(i+1,j+1,n)+q(i,j+1,n)-q(i,j,n)-q(i+1,j,n))/24.0
 
+phi0(:,:,n) = (-q(i+1,j+1,n)+q(i,j+1,n)+q(i,j,n)-q(i+1,j,n))/24.0
+
+
+
 do n = 2,3
     do i = 2, Nx-1 
         do j = 2, Ny-1
