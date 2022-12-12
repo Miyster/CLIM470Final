@@ -41,8 +41,8 @@ REAL, parameter:: f_cor=10e-04, g=9.8
    
 
     !delt = 5*60                                !time step (10 min) in seconds (changes for each run)
-    delt = 5*60
-    !delt = 2.5*60
+    !delt = 5*60
+    delt = 2.5*60
 
     f_1= (23*delt)/12                           !alphas for 3rd order adams-bashforth schemes, double check these 
     f_2 = (4*delt)/3
