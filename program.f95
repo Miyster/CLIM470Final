@@ -318,7 +318,7 @@ do n = 2,3
 end do
 
 ! what is hq0??????? add in parentheses
-hq0(:,:,n) = (h(i+1/2,j+1/2,n)+h(i-1/2,j+1/2,n)+h(i-1/2,j-1/2,n)+h(i+1/2,j-1/2,n))/4.0            !Added eqn 3.15 from Arakawa for the def of hq0 for a square grid 
+!hq0(:,:,n) = (h(i+1/2,j+1/2,n)+h(i-1/2,j+1/2,n)+h(i-1/2,j-1/2,n)+h(i+1/2,j-1/2,n))/4.0            !Added eqn 3.15 from Arakawa for the def of hq0 for a square grid 
 q0(:,:,n) = (f_cor+z0(:,:,n))/hq0(:,:,n) 
 
 do i = 1,Nx
