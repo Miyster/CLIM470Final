@@ -266,12 +266,12 @@ do i = 1, Nx
 end do
 
 do j = 1, Ny-1
-    ken0(Nx,j,1)=(u(Nx-1,j)**2 + u(1,j)**2 + v(Nx-1,j)**2 + v(1,Ny+1**2))/4.
+    ken0(Nx,j,1)=(u(Nx-1,j)**2 + u(1,j)**2 + v(Nx-1,j)**2 + v(1,Ny+1)**2)/4.0    
 end do
 
 do i = 1, Nx-1
 	do j = 1, Ny-1
-   		 ken0(i,j,1) =(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1**2))/4.
+   		 ken0(i,j,1) =(u(i,j)**2 + u(i+1,j)**2 + v(i,j)**2 + v(1,j+1)**2)/4.0     
 	end do
 end do
 
@@ -317,14 +317,14 @@ do n = 2,3
 end do
 
 ! what is hq0??????? add in parentheses
-!hq0(:,:,n) = (h(i+1/2,j+1/2)+h(i-1/2,j+1/2)+h(i-1/2,j-1/2)+h(i+1/2,j-1/2))/4            !Added eqn 3.15 from Arakawa for the def of hq0 for a square grid 
+hq0(:,:,n) = (h(i+1/2,j+1/2)+h(i-1/2,j+1/2)+h(i-1/2,j-1/2)+h(i+1/2,j-1/2))/4.0            !Added eqn 3.15 from Arakawa for the def of hq0 for a square grid 
 q0(:,:,n) = (f_cor+z0(:,:,n))/hq0(:,:,n) 
 
 do i = 1,Nx
    ght0(i,:,n) = g*(h(i,:)+hs(i))
 end do
 
-ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2
+ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2.0
 
 ! added in u(i,j) and v(i,j) for momentum
 nstep = 4
