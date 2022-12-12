@@ -375,28 +375,28 @@ do n = 4, 1440
             u(i,j) = u(i,j) + f_1*(alp1(i,j+1,1)*vs1(i,j,1)+bet1(i,j+1,1)*vs1(i-1,j+1,1) &
 	    	+gam1(i,j+1,1)*vs1(i-1,j,1)+del1(i,j+1,1)*vs1(i+1,j,1) &
 		-eps1(i+1,j+1,1)*us1(i+1,j+1,1)+eps1(i-1,j+1,1)*us1(i-1,j+1,1) &
-		-(ken1(i+1,j+1,1)+ght1(i+1,j+1)-ken1(i-1,j+1,1)-ght1(i-1,j+1))/d) &
+		-(ken1(i+1,j+1,1)+ght1(i+1,j+1,1)-ken1(i-1,j+1,1)-ght1(i-1,j+1,1))/d) &
 		-f_2*(alp2(i,j+1,2)*vs2(i,j,2)+bet2(i,j+1,2)*vs2(i-1,j+1,2)&
 	    	+gam2(i,j+1,2)*vs2(i-1,j,2)+del2(i,j+1,2)*vs2(i+1,j,2)&
 		-eps2(i+1,j+1,2)*us2(i+1,j+1,2)+eps2(i-1,j+1,2)*us2(i-1,j+1,2)&
-		-(ken2(i+1,j+1,2)+ght2(i+1,j+1)-ken2(i-1,j+1,2)-ght2(i-1,j+1))/d)&      !***I think we can optomize this code: have all of the **# coefficients 
+		-(ken2(i+1,j+1,2)+ght2(i+1,j+1,2)-ken2(i-1,j+1,2)-ght2(i-1,j+1,2))/d)&      !***I think we can optomize this code: have all of the **# coefficients 
 		+f_3*(alp3(i,j+1,3)*vs3(i,j,3)+bet3(i,j+1,3)*vs3(i-1,j+1,3)&                !be 3 dimension arrays, and just call (i*,j*,1), (i*,j*,2),(i*,j*,3) of each array. (can we also add the 0?) 
 	    	+gam3(i,j+1,3)*vs3(i-1,j,3)+del3(i,j+1,3)*vs3(i+1,j,3)&                 !*Also, we may need to parenthesize the arrays in order for the compiler to run without error (see 266-277)
 		-eps3(i+1,j+1,3)*us3(i+1,j+1,3)+eps3(i-1,j+1,3)*us3(i-1,j+1,3)&
-		-(ken3(i+1,j+1,3)+ght3(i+1,j+1)-ken3(i-1,j+1,3)-ght3(i-1,j+1))/d)
+		-(ken3(i+1,j+1,3)+ght3(i+1,j+1,3)-ken3(i-1,j+1,3)-ght3(i-1,j+1,3))/d)
             
 	    v(i,j) = v(i,j) - f_1*(gam1(i+1,j+1,1)*us1(i+1,j+1,1)+del1(i,j+1,1)*us1(i,j+1,1)&
 	    		+alp1(i,j-1,1)*us1(i,j-1,1)+bet1(i+1,j-1,1)*us1(i+1,j-1,1)&
 			+phi1(i+1,j+1,1)*vs1(i+1,j+1,1)-phi1(i+1,j-1,1)*vs1(i+1,j-1,1)&
-			-(ken1(i+1,j+1,1)+ght1(i+1,j+1)-ken1(i+1,j-1,1)-ght1(i+1,j-1))/d)&
+			-(ken1(i+1,j+1,1)+ght1(i+1,j+1,1)-ken1(i+1,j-1,1)-ght1(i+1,j-1,1))/d)&
 			+f_2*(gam2(i+1,j+1,2)*us2(i+1,j+1,2)+del2(i,j+1,2)*us2(i,j+1,2)&
 	    		+alp2(i,j-1,2)*us2(i,j-1,2)+bet2(i+1,j-1,2)*us2(i+1,j-1,2)&
 			+phi2(i+1,j+1,2)*vs2(i+1,j+1,2)-phi2(i+1,j-1,2)*vs2(i+1,j-1,2)&
-			-(ken2(i+1,j+1,2)+ght2(i+1,j+1)-ken2(i+1,j-1,2)-ght2(i+1,j-1))/d)&
+			-(ken2(i+1,j+1,2)+ght2(i+1,j+1,2)-ken2(i+1,j-1,2)-ght2(i+1,j-1,2))/d)&
 			-f_3*(gam3(i+1,j+1,3)*us3(i+1,j+1,3)+del3(i,j+1,3)*us3(i,j+1,3)&
 	    		+alp3(i,j-1,3)*us3(i,j-1,3)+bet3(i+1,j-1,3)*us3(i+1,j-1,3)&
 			+phi3(i+1,j+1,3)*vs3(i+1,j+1,3)-phi3(i+1,j-1,3)*vs3(i+1,j-1,3)&
-			-(ken3(i+1,j+1,3)+ght3(i+1,j+1)-ken3(i+1,j-1,3)-ght3(i+1,j-1))/d)
+			-(ken3(i+1,j+1,3)+ght3(i+1,j+1,3)-ken3(i+1,j-1,3)-ght3(i+1,j-1,3))/d)
         end do
     end do
     
