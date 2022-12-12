@@ -420,9 +420,9 @@ do n = 4, 1440
     	!write(10,*) "h",h
 	!write(10,*) "u",u
 	!write(10,*) "v",v
-    	print*, "h",h, " "
-	print*, "u",u, " "
-	print*, "v",v, " "
+    	print*, "h",h, // achar(13) // achar(10) //
+	!print*, "u",u, " "
+	!print*, "v",v, " "
         !write(10,*) h, u, V
         nstep = 0
     end if 
