@@ -231,8 +231,8 @@ do i=2,Nx-1
 	end do
 end do
 
-    hq0(1,:,1)=(h(1,1) + h(Nx,1))/2.0 !!!!!!!!What are these two lines? Are these in the correct spot?
-    hq0(1,Ny,1)=(h(1,Ny-1) + h(Nx,Ny-2))/2.0
+hq0(1,:,1)=(h(1,1) + h(Nx,1))/2.0                !What are these two lines? Are these in the correct spot? Yes, they're part of the initial conditions of the model  
+hq0(1,Ny,1)=(h(1,Ny-1) + h(Nx,Ny-2))/2.0
     
 do i = 2,Nx
     hq0(i,1,1)=(h(i,1) + h(i-1,1))/2.0
