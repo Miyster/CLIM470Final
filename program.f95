@@ -420,11 +420,11 @@ do n = 4, 1440
     	!write(10,*) "h",h
 	!write(10,*) "u",u
 	!write(10,*) "v",v
-    	print*, "h",h
+    	!print*, "h",h
 	!print*, 
-	print '(2A)', 'First line', NEW_LINE('a')
-	print*, "u",u
-	print*, "v",v
+	print '(2A)', 'h',h,NEW_LINE('a')
+	!print*, "u",u
+	!print*, "v",v
         !write(10,*) h, u, V
         nstep = 0
     end if 
