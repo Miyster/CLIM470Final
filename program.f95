@@ -275,7 +275,7 @@ do i = 1, Nx-1
 	end do
 end do
 
-us1(:,:,1) = us0(:,:,1)
+us1(:,:,1) = us0(:,:,1)  !Might need to move these to line 340 and change back to original 2D arrays, will explain 
 us2(:,:,2) = us0(:,:,2)
 us3(:,:,3) = us0(:,:,3)
 vs1(:,:,1) = vs0(:,:,1)
