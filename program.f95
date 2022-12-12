@@ -275,18 +275,7 @@ do i = 1, Nx-1
 	end do
 end do
 
-us1(:,:,1) = us0(:,:,1)  !Might need to move these to line 340 and change back to original 2D arrays, will explain 
-us2(:,:,2) = us0(:,:,2)
-us3(:,:,3) = us0(:,:,3)
-vs1(:,:,1) = vs0(:,:,1)
-vs2(:,:,2) = vs0(:,:,2)
-vs3(:,:,3) = vs0(:,:,3)
-hu1(:,:,1) = hu0(:,:,1) !***Tried to assign 2 dimensional array to an allocated 3 dimensional array :: hotfix; give 2d arrays (hu#,hv#) a static third dim.
-hu2(:,:,2) = hu0(:,:,2)
-hu3(:,:,3) = hu0(:,:,3)
-hv1(:,:,1) = hv0(:,:,1) 
-hv2(:,:,2) = hv0(:,:,2)
-hv3(:,:,3) = hv0(:,:,3) !**if this works, do we need the three different **# vars for hu and hv? can we just assign them to the first three spaces of the array?
+!**if this works, do we need the three different **# vars for hu and hv? can we just assign them to the first three spaces of the array?
                         !as so:
                         !hu(:,:,1)= hu0 (:,:,1)
                         !hu(:,:,2)= hu0 (:,:,2)
@@ -338,27 +327,39 @@ end do
 
 ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2.0
 
-alp1(:,:) = alp0(:,:,1) 
-alp2(:,:) = alp0(:,:,2)
-alp3(:,:) = alp0(:,:,3)
-bet1(:,:) = bet0(:,:,1)
-bet2(:,:) = bet0(:,:,2)
-bet3(:,:) = bet0(:,:,3)
-gam1(:,:) = gam0(:,:,1)
-gam2(:,:) = gam0(:,:,2)
-gam3(:,:) = gam0(:,:,3)
-del1(:,:) = del0(:,:,1)
-del2(:,:) = del0(:,:,2)
-del3(:,:) = del0(:,:,3)
-eps1(:,:) = eps0(:,:,1)
-eps2(:,:) = eps0(:,:,2)
-eps3(:,:) = eps0(:,:,3)
-ken1(:,:) = ken0(:,:,1)
-ken2(:,:) = ken0(:,:,2)
-ken3(:,:) = ken0(:,:,3)
-ght1(:,:) = ght0(:,:,1)
-ght2(:,:) = ght0(:,:,2)
-ght3(:,:) = ght0(:,:,3)       !Added these back, will need them for the momentum equations next 
+us1(:,:,1) = us0(:,:,1)  !Might need to move these to line 340 and change back to original 2D arrays, will explain 
+us2(:,:,2) = us0(:,:,2)
+us3(:,:,3) = us0(:,:,3)
+vs1(:,:,1) = vs0(:,:,1)
+vs2(:,:,2) = vs0(:,:,2)
+vs3(:,:,3) = vs0(:,:,3)
+hu1(:,:,1) = hu0(:,:,1) !***Tried to assign 2 dimensional array to an allocated 3 dimensional array :: hotfix; give 2d arrays (hu#,hv#) a static third dim.
+hu2(:,:,2) = hu0(:,:,2)
+hu3(:,:,3) = hu0(:,:,3)
+hv1(:,:,1) = hv0(:,:,1) 
+hv2(:,:,2) = hv0(:,:,2)
+hv3(:,:,3) = hv0(:,:,3)
+alp1(:,:,1) = alp0(:,:,1) 
+alp2(:,:,2) = alp0(:,:,2)
+alp3(:,:,3) = alp0(:,:,3)
+bet1(:,:,1) = bet0(:,:,1)
+bet2(:,:,2) = bet0(:,:,2)
+bet3(:,:,3) = bet0(:,:,3)
+gam1(:,:,1) = gam0(:,:,1)
+gam2(:,:,2) = gam0(:,:,2)
+gam3(:,:,3) = gam0(:,:,3)
+del1(:,:,1) = del0(:,:,1)
+del2(:,:,2) = del0(:,:,2)
+del3(:,:,3) = del0(:,:,3)
+eps1(:,:,1) = eps0(:,:,1)
+eps2(:,:,2) = eps0(:,:,2)
+eps3(:,:,3) = eps0(:,:,3)
+ken1(:,:,1) = ken0(:,:,1)
+ken2(:,:,2) = ken0(:,:,2)
+ken3(:,:,3) = ken0(:,:,3)
+ght1(:,:,1) = ght0(:,:,1)
+ght2(:,:,2) = ght0(:,:,2)
+ght3(:,:,3) = ght0(:,:,3)       !Added these back, will need them for the momentum equations next 
 
 ! added in u(i,j) and v(i,j) for momentum
 nstep = 4
@@ -435,6 +436,8 @@ do j = 2, Ny-1
         hv0(:,j,1) = (h(:,j-1) + h(:,j+1))/2.0 !***need specified third dim in hv0 to assign the two dimensions in the eq to (same for the last few errors)
 end do
     
+us(:,:,n) = hu0(:,:,n)*u(:,:)          ! I included these two again, will double check for errors 
+vs(:,:,n) = hv0(:,:,n)*v(:,:)
 
 
 
