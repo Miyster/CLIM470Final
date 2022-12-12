@@ -439,10 +439,10 @@ end do
 us0(:,:,n) = hu0(:,:,n)*u(:,:)          ! I included these two again, will double check for errors 
 vs0(:,:,n) = hv0(:,:,n)*v(:,:)
 
-if (((h(ken3+((1/2)*(g)*(h))+((g)*(hs)))-(h(ken0+((1/2)*(g)*(h))+((g)*(hs))))/(delt) = 0) then 
-write(*,*) 'The scheme conserves the total energy.'
-else
-write(*,*) 'The scheme does not conserve the total energy.'
+!if (((h(ken3+((1/2)*(g)*(h))+((g)*(hs)))-(h(ken0+((1/2)*(g)*(h))+((g)*(hs))))/(delt) = 0) then 
+!write(*,*) 'The scheme conserves the total energy.'
+!else
+!write(*,*) 'The scheme does not conserve the total energy.'
 
 
 !do i=1,1440
