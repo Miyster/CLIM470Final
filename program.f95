@@ -14,8 +14,8 @@ INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep,i,j,n,ntime
 REAL :: delt, f_1, f_2, f_3, hs_t
 REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,alp1,bet1,gam1,del1,eps1,&
     ken1,phi1,alp2,bet2,gam2,del2,eps2,ken2,phi2,alp3,bet3,gam3,del3,eps3,ken3,phi3,q0,z0,hu0,hu1,&
-    hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0,vs1, vs2, vs3,us1, us2, us3
-REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, q, ken, ght, ght1, ght2, ght3
+    hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0,vs1, vs2, vs3,us1, us2, us3, q
+REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, ken, ght, ght1, ght2, ght3
 REAL, Dimension(:), ALLOCATABLE :: hs
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
@@ -139,7 +139,7 @@ allocate(ght3(Nx,Ny))
 allocate(q0(Nx,Ny,3))
 allocate(z0(Nx,Ny,3))
 !allocate(z(Nx,Ny))
-allocate(q(Nx,Ny))                                       ! absolute potential vorticity                                       
+allocate(q(Nx,Ny,3))                                       ! absolute potential vorticity                                       
 allocate(ght(Nx,Ny))                                     ! geopotential 
 allocate(ken(Nx,Ny)) 					 !kinetic energy 
 allocate(ken1(Nx,Ny,3)) 
@@ -289,13 +289,13 @@ eps0(:,:,n) = (q(i+1,j+1,n)+q(i,j+1,n)-q(i,j,n)-q(i+1,j,n))/24.0
 
 phi0(:,:,n) = (-q(i+1,j+1,n)+q(i,j+1,n)+q(i,j,n)-q(i+1,j,n))/24.0
 
-alp0(:,:,n) = (2q(i+1,j+1,n)+q(i,j+1,n)+2q(i,j,n)+q(i+1,j,n))/24.0
+alp0(:,:,n) = (2*q(i+1,j+1,n)+q(i,j+1,n)+2*q(i,j,n)+q(i+1,j,n))/24.0
 
-bet0(:,:,n) = (q(i,j+1,n)+2q(i-1,j+1,n)+q(i-1,j,n)+2q(i,j,n))/24.0
+bet0(:,:,n) = (q(i,j+1,n)+2*q(i-1,j+1,n)+q(i-1,j,n)+2*q(i,j,n))/24.0
 
-gam0(:,:,n) = (2q(i,j+1,n)+q(i-1,j+1,n)+2q(i-1,j,n)+q(i,j,n))/24.0
+gam0(:,:,n) = (2*q(i,j+1,n)+q(i-1,j+1,n)+2*q(i-1,j,n)+q(i,j,n))/24.0
 
-del0(:,:,n) = (q(i+1,j+1,n)+2q(i,j+1,n)+q(i,j,n)+2q(i+1,j,n))/24.0 
+del0(:,:,n) = (q(i+1,j+1,n)+2*q(i,j+1,n)+q(i,j,n)+2*q(i+1,j,n))/24.0 
 
 do n = 2,3
     do i = 2, Nx-1 
