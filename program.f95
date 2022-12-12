@@ -327,6 +327,28 @@ end do
 
 ken0(:,:,n)=(u(:,:)*u(:,:) + v(:,:)*v(:,:))/2.0
 
+alp1(:,:) = alp0(:,:,1) 
+alp2(:,:) = alp0(:,:,2)
+alp3(:,:) = alp0(:,:,3)
+bet1(:,:) = bet0(:,:,1)
+bet2(:,:) = bet0(:,:,2)
+bet3(:,:) = bet0(:,:,3)
+gam1(:,:) = gam0(:,:,1)
+gam2(:,:) = gam0(:,:,2)
+gam3(:,:) = gam0(:,:,3)
+del1(:,:) = del0(:,:,1)
+del2(:,:) = del0(:,:,2)
+del3(:,:) = del0(:,:,3)
+eps1(:,:) = eps0(:,:,1)
+eps2(:,:) = eps0(:,:,2)
+eps3(:,:) = eps0(:,:,3)
+ken1(:,:) = ken0(:,:,1)
+ken2(:,:) = ken0(:,:,2)
+ken3(:,:) = ken0(:,:,3)
+ght1(:,:) = ght0(:,:,1)
+ght2(:,:) = ght0(:,:,2)
+ght3(:,:) = ght0(:,:,3)       !Added these back, will need them for the momentum equations next 
+
 ! added in u(i,j) and v(i,j) for momentum
 nstep = 4
 
@@ -365,6 +387,7 @@ do n = 4, 1440
 			-(ken3(i+1,j+1,3)+ght3(i+1,j+1)-ken3(i+1,j-1,3)-ght3(i+1,j-1))/d)
         end do
     end do
+    
     us0(:,:,1) = hu0(:,:,1)*u(:,:)
     vs0(:,:,1) = hv0(:,:,1)*v(:,:)
 
