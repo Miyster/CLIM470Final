@@ -204,8 +204,8 @@ do j = 2, Ny-1
     hv0(:,j,n) = (h(:,j-1) + h(:,j+1))/2.0
 end do 
 
-!us0(:,:,n) = hu0(:,:,n)*u(:,:)
-!vs0(:,:,n) = hv0(:,:,n)*v(:,:)
+us0(:,:,n) = hu0(:,:,n)*u(:,:)          ! I included these two again, will double check for errors 
+vs0(:,:,n) = hv0(:,:,n)*v(:,:)
 
 end do
 !begin momentum :mike:
@@ -287,13 +287,14 @@ hu3(:,:,3) = hu0(:,:,3)
 hv1(:,:,1) = hv0(:,:,1) 
 hv2(:,:,2) = hv0(:,:,2)
 hv3(:,:,3) = hv0(:,:,3) !**if this works, do we need the three different **# vars for hu and hv? can we just assign them to the first three spaces of the array?
-!as so:
-!hu(:,:,1)= hu0 (:,:,1)
-!hu(:,:,2)= hu0 (:,:,2)
-!hu(:,:,3)= hu0 (:,:,3)
-!hv(:,:,1) = hv0(:,:,1) 
-!hv(:,:,2) = hv0(:,:,2)
-!hv(:,:,3) = hv0(:,:,3) !**it cuts down on vars, look through the rest of the code to see if it could be implemented
+                        !as so:
+                        !hu(:,:,1)= hu0 (:,:,1)
+                        !hu(:,:,2)= hu0 (:,:,2)
+                        !hu(:,:,3)= hu0 (:,:,3)
+                        !hv(:,:,1) = hv0(:,:,1) 
+                        !hv(:,:,2) = hv0(:,:,2)
+                        !hv(:,:,3) = hv0(:,:,3) !**it cuts down on vars, look through the rest of the code to see if it could be implemented
+			
 ! define momentum coefficients from eq. 3.13 (***do we need to do this still?)
 
 do n = 2,3
