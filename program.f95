@@ -28,8 +28,8 @@ REAL, parameter:: f_cor=10e-04, g=9.8
     Lx = 6e+06                                  !domain size in x direction, real numbers
     Ly = 2e+06                                  !domain size in y direction, real numbers
 
-    d = 5e+05                                   !Resolution (changes for each run)
-    !d = 2.5e+05
+    !d = 5e+05                                   !Resolution (changes for each run)
+    d = 2.5e+05
     !d = 1.25e+05
 
     Nx = Lx/d + 1                               !number of grid points in the x direction (13, 25, 49), integers
@@ -40,9 +40,9 @@ REAL, parameter:: f_cor=10e-04, g=9.8
     ! need to initialize h0, cannot equal/exceed top of the model or 5000! 
    
 
-    !delt = 10*60                                !time step (10 min) in seconds (changes for each run)
+    delt = 10*60                                !time step (10 min) in seconds (changes for each run)
     !delt = 5*60
-    delt = 2.5*60
+    !delt = 2.5*60
 
     f_1= (23*delt)/12                           !alphas for 3rd order adams-bashforth schemes, double check these 
     f_2 = (4*delt)/3
