@@ -18,7 +18,7 @@ REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,alp1,b
 REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, ken, ght
 REAL, Dimension(:), ALLOCATABLE :: hs
 REAL, parameter:: f_cor=10e-04, g=9.8
-!something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
+
 
 
 !open (unit = 10, file = '470dat1.txt', status = 'new', action = 'readwrite', iostat = ierror)
@@ -73,9 +73,7 @@ SELECT CASE (d)
 
 !initialize variables 
 
-!*****We need to allocate these with the "allocate" command, but it kept throwing errors saying it was not an allocatable variable when I tried
-!***also, they are separated out into separate allocate commands just for debugging, once the variables are straightend out we can make
-!it into one comma separated command
+
 
 allocate(hu0(Nx,Ny,3)) 
 allocate(hu1(Nx,Ny,3)) 
