@@ -420,7 +420,7 @@ do n = 4, 1440
     	!write(10,*) "h",h
 	!write(10,*) "u",u
 	!write(10,*) "v",v
-	write(*,'(A)') 'A' // achar(13) // achar(10)
+	write(*,'(A)') h // achar(13) // achar(10)
     	!print*, "h",h, // achar(13) // achar(10) //
 	!print*, "u",u, " "
 	!print*, "v",v, " "
