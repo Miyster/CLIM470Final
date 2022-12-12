@@ -14,8 +14,8 @@ INTEGER :: d,Lx,Ly,Nx,Ny,h0,nstep,i,j,n,ntime
 REAL :: delt, f_1, f_2, f_3, hs_t
 REAL, DIMENSION(:,:,:), ALLOCATABLE :: alp0,bet0,gam0,del0,eps0,ken0,phi0,alp1,bet1,gam1,del1,eps1,&
     ken1,phi1,alp2,bet2,gam2,del2,eps2,ken2,phi2,alp3,bet3,gam3,del3,eps3,ken3,phi3,q0,z0,hu0,hu1,&
-    hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0,vs1, vs2, vs3,us1, us2, us3, q
-REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, ken, ght, ght1, ght2, ght3
+    hu2,hu3,hv0,hv1,hv2,hv3,hq0,us0,vs0,phi,ght0,vs1, vs2, vs3,us1, us2, us3, q, ght1, ght2, ght3
+REAL, DIMENSION(:,:), ALLOCATABLE :: u, v, h, z, ken, ght
 REAL, Dimension(:), ALLOCATABLE :: hs
 REAL, parameter:: f_cor=10e-04, g=9.8
 !something is off about these, it keeps saying variables are already assigned when they are not ("Symbol 'h' at (1) already has basic type of REAL)
@@ -132,9 +132,9 @@ allocate(phi2(Nx,Ny,3))
 allocate(phi3(Nx,Ny,3))
 
 allocate(ght0(Nx,Ny,3))
-allocate(ght1(Nx,Ny))
-allocate(ght2(Nx,Ny))
-allocate(ght3(Nx,Ny))
+allocate(ght1(Nx,Ny,3))
+allocate(ght2(Nx,Ny,3))
+allocate(ght3(Nx,Ny,3))
  
 allocate(q0(Nx,Ny,3))
 allocate(z0(Nx,Ny,3))
